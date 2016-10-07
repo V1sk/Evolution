@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="none">
+        <item android:title="@string/account">
+            <menu>
+                <group android:checkableBehavior="none">
+                    <item
+                        android:id="@+id/profile"
+                        android:title="@string/profile" />
+                    <item
+                        android:id="@+id/buckets"
+                        android:title="@string/buckets" />
+                </group>
+            </menu>
+        </item>
+
+        <item android:title="@string/about_and_sign_out">
+            <menu>
+                <group android:checkableBehavior="none">
+                    <item
+                        android:id="@+id/about"
+                        android:title="@string/about" />
+
+                    <item
+                        android:id="@+id/sign_out"
+                        android:title="@string/sign_out" />
+                </group>
+            </menu>
+        </item>
+    </group>
+</menu>
