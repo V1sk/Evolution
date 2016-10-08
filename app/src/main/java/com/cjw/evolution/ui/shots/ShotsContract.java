@@ -24,6 +24,8 @@ public interface ShotsContract {
 
         void hideLoadingIndicator();
 
+        void onLoadMoreStatusChange(int status);
+
     }
 
     interface Presenter extends BasePresenter{
@@ -31,6 +33,7 @@ public interface ShotsContract {
         void refresh(String sort);
 
         void loadMore(String sort);
+
     }
 
 }

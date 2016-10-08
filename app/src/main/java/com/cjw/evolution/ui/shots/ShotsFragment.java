@@ -22,6 +22,7 @@ import com.cjw.evolution.ui.common.ShotsDecoration;
 import com.cjw.evolution.ui.common.adapter.OnItemClickListener;
 import com.cjw.evolution.ui.common.recyclerview.LoadMoreCallback;
 import com.cjw.evolution.ui.common.recyclerview.LoadMoreListener;
+import com.cjw.evolution.ui.common.recyclerview.LoadMoreStatus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -80,12 +81,22 @@ public class ShotsFragment extends BaseFragment implements ShotsContract.View, S
         shotsListRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         shotsAdapter = new ShotsAdapter(mData, getActivity());
         shotsAdapter.setShowLoadMore(true);
+        shotsAdapter.setOnReloadMoreListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                presenter.loadMore(ShotsFilterType.DEFAULT_SORT);
+            }
+        });
         shotsListRecyclerView.setAdapter(shotsAdapter);
         shotsListRecyclerView.addItemDecoration(new ShotsDecoration());
         shotsListRecyclerView.addOnScrollListener(new LoadMoreListener(new LoadMoreCallback() {
             @Override
             public void onLoadMore() {
-                presenter.loadMore(ShotsFilterType.DEFAULT_SORT);
+                switch (shotsAdapter.getLoadMoreStatus()) {
+                    case LoadMoreStatus.LOAD_MORE_STATUS_NORMAL:
+                        presenter.loadMore(ShotsFilterType.DEFAULT_SORT);
+                        break;
+                }
             }
         }));
         swipeRefreshLayout.setOnRefreshListener(this);
@@ -145,12 +156,18 @@ public class ShotsFragment extends BaseFragment implements ShotsContract.View, S
     }
 
     @Override
+    public void onLoadMoreStatusChange(int status) {
+        shotsAdapter.setLoadMoreStatus(status);
+    }
+
+    @Override
     public void setPresenter(ShotsContract.Presenter presenter) {
         this.presenter = presenter;
     }
 
     @Override
     public void onRefresh() {
+        shotsAdapter.setLoadMoreStatus(LoadMoreStatus.LOAD_MORE_STATUS_NORMAL);
         presenter.refresh(ShotsFilterType.DEFAULT_SORT);
     }
 

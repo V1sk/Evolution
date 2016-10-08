@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.cjw.evolution.ui.common.recyclerview.LoadMoreStatus;
 import com.cjw.evolution.ui.common.widget.LoadMoreView;
 
 import java.util.List;
@@ -22,9 +23,11 @@ public abstract class ListAdapter<T, V extends IAdapterView> extends RecyclerVie
     private Context mContext;
 
     private OnItemClickListener onItemClickListener;
+    private View.OnClickListener onReloadMoreListener;
     private int itemClickPosition = RecyclerView.NO_POSITION;
 
     private boolean showLoadMore;
+    private int loadMoreStatus = LoadMoreStatus.LOAD_MORE_STATUS_NORMAL;
 
     public ListAdapter(List<T> mData, Context mContext) {
         this.mData = mData;
@@ -64,7 +67,16 @@ public abstract class ListAdapter<T, V extends IAdapterView> extends RecyclerVie
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         IAdapterView itemView = (IAdapterView) holder.itemView;
-        itemView.bind(getItem(position), position);
+        switch (getItemViewType(position)) {
+            case TYPE_DATA:
+                itemView.bind(getItem(position), position);
+                break;
+            case TYPE_LOAD_MORE:
+                ((LoadMoreView)itemView).setReloadListener(onReloadMoreListener);
+                itemView.bind(loadMoreStatus, position);
+                break;
+        }
+
     }
 
     @Override
@@ -128,5 +140,18 @@ public abstract class ListAdapter<T, V extends IAdapterView> extends RecyclerVie
 
     public void setShowLoadMore(boolean showLoadMore) {
         this.showLoadMore = showLoadMore;
+    }
+
+    public int getLoadMoreStatus() {
+        return loadMoreStatus;
+    }
+
+    public void setLoadMoreStatus(int loadMoreStatus) {
+        this.loadMoreStatus = loadMoreStatus;
+        notifyDataSetChanged();
+    }
+
+    public void setOnReloadMoreListener(View.OnClickListener onReloadMoreListener) {
+        this.onReloadMoreListener = onReloadMoreListener;
     }
 }
