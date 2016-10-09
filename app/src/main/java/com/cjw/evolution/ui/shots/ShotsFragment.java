@@ -19,7 +19,6 @@ import com.cjw.evolution.data.model.Shots;
 import com.cjw.evolution.data.source.ShotsRepository;
 import com.cjw.evolution.ui.base.BaseFragment;
 import com.cjw.evolution.ui.common.ShotsDecoration;
-import com.cjw.evolution.ui.common.adapter.OnItemClickListener;
 import com.cjw.evolution.ui.common.recyclerview.LoadMoreCallback;
 import com.cjw.evolution.ui.common.recyclerview.LoadMoreListener;
 import com.cjw.evolution.ui.common.recyclerview.LoadMoreStatus;
@@ -31,7 +30,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
-public class ShotsFragment extends BaseFragment implements ShotsContract.View, SwipeRefreshLayout.OnRefreshListener, OnItemClickListener {
+public class ShotsFragment extends BaseFragment implements ShotsContract.View, SwipeRefreshLayout.OnRefreshListener {
 
     @BindView(R.id.shots_list_recycler_view)
     RecyclerView shotsListRecyclerView;
@@ -171,8 +170,4 @@ public class ShotsFragment extends BaseFragment implements ShotsContract.View, S
         presenter.refresh(ShotsFilterType.DEFAULT_SORT);
     }
 
-    @Override
-    public void onItemClick(int position) {
-
-    }
 }

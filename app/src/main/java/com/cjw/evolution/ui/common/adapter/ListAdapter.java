@@ -2,6 +2,7 @@ package com.cjw.evolution.ui.common.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -15,6 +16,8 @@ import java.util.List;
  */
 
 public abstract class ListAdapter<T, V extends IAdapterView> extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+
+    private static final String TAG = "ListAdapter";
 
     private static final int TYPE_DATA = 1; // data
     private static final int TYPE_LOAD_MORE = 2;// load more
@@ -50,13 +53,14 @@ public abstract class ListAdapter<T, V extends IAdapterView> extends RecyclerVie
         final RecyclerView.ViewHolder holder = new RecyclerView.ViewHolder(itemView) {
         };
         if (onItemClickListener != null && viewType == TYPE_DATA) {
+            Log.d(TAG, "setListener: " + holder.getAdapterPosition());
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     int position = holder.getAdapterPosition();
                     if (position != RecyclerView.NO_POSITION) {
                         itemClickPosition = position;
-                        onItemClickListener.onItemClick(position);
+                        onItemClickListener.onItemClick(view, position);
                     }
                 }
             });
@@ -72,7 +76,7 @@ public abstract class ListAdapter<T, V extends IAdapterView> extends RecyclerVie
                 itemView.bind(getItem(position), position);
                 break;
             case TYPE_LOAD_MORE:
-                ((LoadMoreView)itemView).setReloadListener(onReloadMoreListener);
+                ((LoadMoreView) itemView).setReloadListener(onReloadMoreListener);
                 itemView.bind(loadMoreStatus, position);
                 break;
         }

@@ -29,6 +29,10 @@
         <item name="textAllCaps">false</item>
     </style>
 
+    <style name="ExpandedToolbar">
+        <item name="android:textColor">@android:color/transparent</item>
+    </style>
+
     <dimen name="ff.main.tab.indicator.height">2dp</dimen>
     <dimen name="ff.padding.normal">8dp</dimen>
 </resources>

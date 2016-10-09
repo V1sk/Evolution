@@ -26,5 +26,10 @@
     <string name="sign_out">Sign out</string>
     <string name="empty_view">No datas received</string>
     <string name="can_not_load_data">Can not load data.</string>
+    <string name="transition_shot">transition_shot</string>
+    <string name="like_count">%s Likes</string>
+    <string name="view_count">%s Views</string>
+    <string name="no_comment">no comments</string>
+    <string name="reply_hint">Add a comment</string>
 
 </resources>

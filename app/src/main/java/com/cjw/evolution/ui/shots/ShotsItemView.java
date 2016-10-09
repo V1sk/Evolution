@@ -1,6 +1,9 @@
 package com.cjw.evolution.ui.shots;
 
+import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.view.View;
 import android.widget.ImageView;
@@ -9,8 +12,10 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.cjw.evolution.R;
+import com.cjw.evolution.data.ExtrasKey;
 import com.cjw.evolution.data.model.Shots;
 import com.cjw.evolution.ui.common.adapter.IAdapterView;
+import com.cjw.evolution.ui.shotsdetail.ShotsDetailActivity;
 import com.cjw.evolution.utils.TimeUtils;
 
 import butterknife.BindView;
@@ -44,10 +49,15 @@ public class ShotsItemView extends CardView implements IAdapterView<Shots> {
         super(context);
         View.inflate(context, R.layout.item_shots_layout, this);
         ButterKnife.bind(this);
+//        setClickable(true);
+//        setFocusable(true);
+//        rootView.setClickable(false);
+//        rootView.setFocusable(false);
+//        rootView.clearFocus();
     }
 
     @Override
-    public void bind(Shots item, int position) {
+    public void bind(final Shots item, final int position) {
         final int[] imageSize = item.bestSize();
         Glide.with(getContext())
                 .load(item.getUser().getAvatar_url())
@@ -59,7 +69,6 @@ public class ShotsItemView extends CardView implements IAdapterView<Shots> {
                 .load(item.getBestImage())
                 .placeholder(R.color.text_summary_color)
                 .diskCacheStrategy(DiskCacheStrategy.SOURCE)
-//                    .bitmapTransform(new BlurTransformation(context, 25))
                 .crossFade()
                 .override(imageSize[0], imageSize[1])
                 .into(itemImage);
@@ -73,5 +82,15 @@ public class ShotsItemView extends CardView implements IAdapterView<Shots> {
         commentCount.setText(String.valueOf(item.getComments_count()));
         viewCount.setText(String.valueOf(item.getViews_count()));
         itemTime.setText(TimeUtils.formatShotsTime(item.getCreated_at()));
+        itemImage.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                view.setTransitionName(getContext().getResources().getString(R.string.transition_shot));
+                Intent intent = new Intent(getContext(), ShotsDetailActivity.class);
+                intent.putExtra(ExtrasKey.EXTRAS_SHOTS_DETAIL, item);
+                ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation((Activity) getContext(), view, view.getTransitionName());
+                getContext().startActivity(intent, options.toBundle());
+            }
+        });
     }
 }
