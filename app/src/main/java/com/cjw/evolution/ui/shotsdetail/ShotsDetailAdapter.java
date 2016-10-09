@@ -1,7 +1,6 @@
 package com.cjw.evolution.ui.shotsdetail;
 
 import android.content.Context;
-import android.support.design.widget.TextInputEditText;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.text.TextUtils;
@@ -9,7 +8,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -189,10 +187,6 @@ public class ShotsDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     }
 
     static class ReplyViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.btn_reply)
-        ImageButton btnReply;
-        @BindView(R.id.edit_reply)
-        TextInputEditText editReply;
 
         public ReplyViewHolder(View itemView) {
             super(itemView);
