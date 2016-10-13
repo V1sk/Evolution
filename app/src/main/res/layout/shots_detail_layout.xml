@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:padding="16dp"
         android:text="Max the fox"
-        android:textColor="@color/text_main_color"
+        android:textColor="@color/textColorPrimary"
         android:textSize="18dp"
         android:textStyle="bold" />
 
@@ -23,7 +23,7 @@
         android:paddingRight="16dp"
         android:layout_marginBottom="16dp"
         android:text="Quick, messy, five minute sketch of something that might become a fictional something."
-        android:textColor="@color/text_summary_color"
+        android:textColor="@color/textColorSecondary"
         android:textSize="14sp" />
 
     <LinearLayout
@@ -40,7 +40,7 @@
             android:layout_gravity="center_vertical"
             android:padding="16dp"
             android:text="HellaFlush"
-            android:textColor="@color/text_summary_color"
+            android:textColor="@color/textColorSecondary"
             android:textSize="14sp" />
 
         <de.hdodenhof.circleimageview.CircleImageView
@@ -80,7 +80,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="16dp"
                 android:text="300 Likes"
-                android:textColor="@color/text_summary_color"
+                android:textColor="@color/textColorSecondary"
                 android:textSize="14sp" />
 
         </RelativeLayout>
@@ -106,7 +106,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="16dp"
                 android:text="1024 Views"
-                android:textColor="@color/text_summary_color"
+                android:textColor="@color/textColorSecondary"
                 android:textSize="14sp" />
 
         </RelativeLayout>
@@ -133,7 +133,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="16dp"
                 android:text="Share"
-                android:textColor="@color/text_summary_color"
+                android:textColor="@color/textColorSecondary"
                 android:textSize="14sp" />
 
         </RelativeLayout>

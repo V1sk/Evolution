@@ -29,7 +29,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:text="26 sep"
-                android:textColor="@color/ff.theme.white.textColorPrimary"
+                android:textColor="@color/textColorPrimary"
                 android:textSize="14sp" />
 
             <LinearLayout
@@ -47,7 +47,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:text="Lancer Evolution"
-                    android:textColor="@color/ff.theme.white.textColorPrimary"
+                    android:textColor="@color/textColorPrimary"
                     android:textSize="14sp"
                     android:textStyle="bold" />
             </LinearLayout>
@@ -59,7 +59,6 @@
             android:id="@+id/item_image"
             android:layout_width="match_parent"
             android:layout_height="230dp"
-            android:background="?android:attr/selectableItemBackground"
             android:scaleType="centerCrop" />
 
         <RelativeLayout
@@ -85,7 +84,7 @@
                 android:layout_marginRight="6dp"
                 android:minEms="3"
                 android:text="183"
-                android:textColor="@color/ff.theme.white.textColorPrimary"
+                android:textColor="@color/textColorPrimary"
                 android:textSize="14sp" />
 
             <TextView
@@ -98,7 +97,7 @@
                 android:drawablePadding="4dp"
                 android:gravity="top"
                 android:text="18"
-                android:textColor="@color/ff.theme.white.textColorPrimary"
+                android:textColor="@color/textColorPrimary"
                 android:textSize="14sp" />
 
             <TextView
@@ -112,7 +111,7 @@
                 android:gravity="top"
                 android:minEms="3"
                 android:text="1380"
-                android:textColor="@color/ff.theme.white.textColorPrimary"
+                android:textColor="@color/textColorPrimary"
                 android:textSize="14sp"/>
 
         </RelativeLayout>

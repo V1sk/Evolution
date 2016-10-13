@@ -1,20 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#EA4C89</color>
-    <color name="colorPrimaryDark">#EA4C89</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorPrimary">#FFFFFF</color>
+    <color name="colorPrimaryDark">#C1C1C1</color>
+    <color name="colorAccent">#212121</color>
 
-    <color name="ff.theme.white.statusBar">#FFFFFF</color>
-    <color name="ff.theme.white.colorPrimary">#FFFFFF</color>
-    <color name="ff.theme.white.colorPrimaryDark">#C1C1C1</color>
-    <color name="ff.theme.white.colorAccent">#212121</color>
-    <color name="ff.theme.white.textColorPrimary">#212121</color>
-    <color name="ff.theme.white.textColorSecondary">#7F7F7F</color>
-    <color name="ff.theme.white.characterView.textColor">#CCCCCC</color>
-    <color name="ff.theme.white.characterView.BackgroundColor">#EEEEEE</color>
-    <color name="ff.background">#F9F9F9</color>
+    <color name="statusBar">#FFFFFF</color>
+    <color name="textColorPrimary">#212121</color>
+    <color name="textColorSecondary">#7F7F7F</color>
+    <color name="background">#F9F9F9</color>
     <color name="white">#ffffff</color>
-    <color name="text_summary_color">#979797</color>
-    <color name="text_main_color">#333333</color>
     <color name="alpha_black">#5000</color>
 </resources>

@@ -18,7 +18,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:text="20小时前"
-        android:textColor="@color/text_summary_color"
+        android:textColor="@color/textColorPrimary"
         android:textSize="14sp" />
 
     <TextView
@@ -31,7 +31,7 @@
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
         android:text="UserName"
-        android:textColor="@color/text_summary_color"
+        android:textColor="@color/textColorPrimary"
         android:textSize="14sp"
         android:textStyle="bold" />
 
@@ -46,11 +46,11 @@
         android:paddingBottom="16dp"
         android:paddingRight="16dp"
         android:text="comment content"
-        android:textColor="@color/text_summary_color"
+        android:textColor="@color/textColorSecondary"
         android:textSize="14sp" />
 
     <View
-        android:background="@color/text_summary_color"
+        android:background="@color/textColorSecondary"
         android:layout_width="match_parent"
         android:layout_toRightOf="@id/avatar"
         android:layout_marginLeft="16dp"

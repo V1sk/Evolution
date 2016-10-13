@@ -58,7 +58,7 @@ public class ShotsDetailActivity extends BaseActivity {
         final int[] imageSize = shots.bestSize();
         Glide.with(this)
                 .load(shots.getBestImage())
-                .placeholder(R.color.text_summary_color)
+                .placeholder(R.color.textColorSecondary)
                 .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                 .crossFade()
                 .override(imageSize[0], imageSize[1])

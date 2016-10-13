@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -44,20 +45,30 @@ public class ShotsItemView extends CardView implements IAdapterView<Shots> {
     TextView commentCount;
     @BindView(R.id.view_count)
     TextView viewCount;
+    @BindView(R.id.root_view)
+    LinearLayout rootView;
+
+    private Shots item;
 
     public ShotsItemView(Context context) {
         super(context);
         View.inflate(context, R.layout.item_shots_layout, this);
         ButterKnife.bind(this);
-//        setClickable(true);
-//        setFocusable(true);
-//        rootView.setClickable(false);
-//        rootView.setFocusable(false);
-//        rootView.clearFocus();
+        rootView.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                itemImage.setTransitionName(getContext().getResources().getString(R.string.transition_shot));
+                Intent intent = new Intent(getContext(), ShotsDetailActivity.class);
+                intent.putExtra(ExtrasKey.EXTRAS_SHOTS_DETAIL, item);
+                ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation((Activity) getContext(), itemImage, itemImage.getTransitionName());
+                getContext().startActivity(intent, options.toBundle());
+            }
+        });
     }
 
     @Override
     public void bind(final Shots item, final int position) {
+        this.item = item;
         final int[] imageSize = item.bestSize();
         Glide.with(getContext())
                 .load(item.getUser().getAvatar_url())
@@ -67,7 +78,7 @@ public class ShotsItemView extends CardView implements IAdapterView<Shots> {
                 .into(userAvatar);
         Glide.with(getContext())
                 .load(item.getBestImage())
-                .placeholder(R.color.text_summary_color)
+                .placeholder(R.color.textColorSecondary)
                 .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                 .crossFade()
                 .override(imageSize[0], imageSize[1])
@@ -82,15 +93,5 @@ public class ShotsItemView extends CardView implements IAdapterView<Shots> {
         commentCount.setText(String.valueOf(item.getComments_count()));
         viewCount.setText(String.valueOf(item.getViews_count()));
         itemTime.setText(TimeUtils.formatShotsTime(item.getCreated_at()));
-        itemImage.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                view.setTransitionName(getContext().getResources().getString(R.string.transition_shot));
-                Intent intent = new Intent(getContext(), ShotsDetailActivity.class);
-                intent.putExtra(ExtrasKey.EXTRAS_SHOTS_DETAIL, item);
-                ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation((Activity) getContext(), view, view.getTransitionName());
-                getContext().startActivity(intent, options.toBundle());
-            }
-        });
     }
 }
