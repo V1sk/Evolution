@@ -18,7 +18,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:text="20小时前"
-        android:textColor="@color/textColorPrimary"
+        android:textColor="@color/textColorSecondary"
         android:textSize="14sp" />
 
     <TextView
@@ -50,7 +50,7 @@
         android:textSize="14sp" />
 
     <View
-        android:background="@color/textColorSecondary"
+        android:background="@color/divider_color"
         android:layout_width="match_parent"
         android:layout_toRightOf="@id/avatar"
         android:layout_marginLeft="16dp"
