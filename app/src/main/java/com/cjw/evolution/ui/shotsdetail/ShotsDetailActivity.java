@@ -21,6 +21,7 @@ import com.cjw.evolution.R;
 import com.cjw.evolution.data.ExtrasKey;
 import com.cjw.evolution.data.model.Comment;
 import com.cjw.evolution.data.model.Shots;
+import com.cjw.evolution.data.source.ShotsDetailRepository;
 import com.cjw.evolution.ui.base.BaseActivity;
 import com.cjw.evolution.utils.AnimUtils;
 
@@ -31,7 +32,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class ShotsDetailActivity extends BaseActivity {
+public class ShotsDetailActivity extends BaseActivity implements ShotsDetailContract.View {
 
     final long ANIMATION_DURATION = 500;
 
@@ -48,6 +49,7 @@ public class ShotsDetailActivity extends BaseActivity {
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
 
+    private ShotsDetailContract.Presenter presenter;
     private Shots shots;
     private List<Comment> commentList = new ArrayList<>();
     private ShotsDetailAdapter detailAdapter;
@@ -77,7 +79,14 @@ public class ShotsDetailActivity extends BaseActivity {
         recyclerView.setLayoutManager(layoutManager);
         detailAdapter = new ShotsDetailAdapter(shots, commentList);
         recyclerView.setAdapter(detailAdapter);
+        new ShotsDetailPresenter(ShotsDetailRepository.getInstance(), this).subscribe();
+        presenter.getCommentList(shots.getId());
+    }
 
+    @Override
+    protected void onDestroy() {
+        presenter.unsubscribe();
+        super.onDestroy();
     }
 
     @OnClick(R.id.fab)
@@ -117,4 +126,40 @@ public class ShotsDetailActivity extends BaseActivity {
             fab.show();
         }
     };
+
+    @Override
+    public void onGetCommentSuccess(List<Comment> commentList) {
+        this.commentList.addAll(commentList);
+        detailAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onGetCommentError(String err) {
+
+    }
+
+    @Override
+    public void onLikeShots() {
+
+    }
+
+    @Override
+    public void onUnLikeShots() {
+
+    }
+
+    @Override
+    public void showOrHideEmptyView() {
+
+    }
+
+    @Override
+    public void onLoadingStatusChange(int status) {
+
+    }
+
+    @Override
+    public void setPresenter(ShotsDetailContract.Presenter presenter) {
+        this.presenter = presenter;
+    }
 }

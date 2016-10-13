@@ -7,6 +7,7 @@ import com.cjw.evolution.data.model.User;
 
 import java.util.List;
 
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
@@ -37,4 +38,7 @@ public interface DribbbleApiService {
 
     @GET("shots/{id}/like")
     Observable<LikeResponse> checkIfLike(@Path("id") long id);
+
+    @DELETE("shots/{id}/like")
+    Observable unLike(@Path("id") long id);
 }

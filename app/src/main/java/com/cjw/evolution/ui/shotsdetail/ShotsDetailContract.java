@@ -3,7 +3,6 @@ package com.cjw.evolution.ui.shotsdetail;
 import com.cjw.evolution.data.model.Comment;
 import com.cjw.evolution.ui.base.BasePresenter;
 import com.cjw.evolution.ui.base.BaseView;
-import com.cjw.evolution.ui.shots.ShotsContract;
 
 import java.util.List;
 
@@ -13,7 +12,7 @@ import java.util.List;
 
 public interface ShotsDetailContract {
 
-    interface View extends BaseView<ShotsContract.Presenter> {
+    interface View extends BaseView<Presenter> {
 
         void onGetCommentSuccess(List<Comment> commentList);
 
@@ -22,6 +21,10 @@ public interface ShotsDetailContract {
         void onLikeShots();
 
         void onUnLikeShots();
+
+        void showOrHideEmptyView();
+
+        void onLoadingStatusChange(int status);
     }
 
     interface Presenter extends BasePresenter {

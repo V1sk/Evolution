@@ -16,6 +16,7 @@ import com.bumptech.glide.Glide;
 import com.cjw.evolution.R;
 import com.cjw.evolution.data.model.Comment;
 import com.cjw.evolution.data.model.Shots;
+import com.cjw.evolution.utils.TimeUtils;
 
 import java.util.List;
 
@@ -198,11 +199,11 @@ public class ShotsDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                     .load(comment.getUser().getAvatar_url())
                     .placeholder(R.drawable.head_default)
                     .override(100, 100)
-                    .crossFade()
+                    .dontAnimate()
                     .into(avatar);
             userName.setText(comment.getUser().getName());
             commentContent.setText(Html.fromHtml(comment.getBody()).toString().trim());
-
+            commentTime.setText(TimeUtils.formatShotsTime(comment.getCreated_at()));
         }
     }
 }
