@@ -62,9 +62,6 @@ public class ShotsDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             case TYPE_NO_COMMENT:
                 view = layoutInflater.inflate(R.layout.layout_no_comment, parent, false);
                 return new NoCommentViewHolder(view);
-            case TYPE_REPLY:
-                view = layoutInflater.inflate(R.layout.layout_reply, parent, false);
-                return new ReplyViewHolder(view);
         }
         return null;
     }
@@ -84,9 +81,6 @@ public class ShotsDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                 Log.d("getItemViewType","TYPE_NO_COMMENT");
                 ((NoCommentViewHolder) holder).showNoComment(showNoComment);
                 break;
-            case TYPE_REPLY:
-                Log.d("getItemViewType","TYPE_REPLY");
-                break;
             default:
                 break;
         }
@@ -94,18 +88,13 @@ public class ShotsDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     @Override
     public int getItemCount() {
-        return hasComment() ? commentList.size() + 2 : 3;
+        return hasComment() ? commentList.size() + 1 : 2;
     }
 
     @Override
     public int getItemViewType(int position) {
         if (position == 0) {
-
             return TYPE_DETAIL;
-        }
-        int footerPosition = hasComment() ? commentList.size() + 1 : 2;
-        if (position == footerPosition) {
-            return TYPE_REPLY;
         }
         return hasComment() ? TYPE_COMMENT : TYPE_NO_COMMENT;
     }
@@ -184,15 +173,6 @@ public class ShotsDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             loadingComment.setVisibility(View.GONE);
             txtNoComment.setVisibility(View.GONE);
         }
-    }
-
-    static class ReplyViewHolder extends RecyclerView.ViewHolder {
-
-        public ReplyViewHolder(View itemView) {
-            super(itemView);
-            ButterKnife.bind(this, itemView);
-        }
-
     }
 
     static class CommentViewHolder extends RecyclerView.ViewHolder {
