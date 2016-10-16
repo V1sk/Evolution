@@ -66,4 +66,5 @@ dependencies {
     compile libs.circle_imageview
     compile libs.glide_transformations
     compile libs.greenDao
+    compile libs.recyclerview_helper
 }

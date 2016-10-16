@@ -14,6 +14,7 @@ buildscript {
 allprojects {
     repositories {
         jcenter()
+        maven { url "https://jitpack.io" }
     }
 }
 
@@ -51,5 +52,6 @@ ext {
             circle_imageview      : 'de.hdodenhof:circleimageview:2.1.0',
             glide_transformations : 'jp.wasabeef:glide-transformations:2.0.1',
             greenDao              : 'org.greenrobot:greendao:3.2.0',
+            recyclerview_helper   : 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.2.2',
     ]
 }
