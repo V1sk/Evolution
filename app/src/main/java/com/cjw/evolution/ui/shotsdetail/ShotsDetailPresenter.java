@@ -1,6 +1,7 @@
 package com.cjw.evolution.ui.shotsdetail;
 
 import com.cjw.evolution.data.model.Comment;
+import com.cjw.evolution.data.model.LikeResponse;
 import com.cjw.evolution.data.source.ShotsDetailRepository;
 
 import java.util.List;
@@ -15,6 +16,7 @@ import rx.subscriptions.CompositeSubscription;
  * Created by CJW on 2016/10/13.
  */
 
+@SuppressWarnings("unchecked")
 public class ShotsDetailPresenter implements ShotsDetailContract.Presenter {
 
     private CompositeSubscription compositeSubscription;
@@ -59,17 +61,75 @@ public class ShotsDetailPresenter implements ShotsDetailContract.Presenter {
 
     @Override
     public void checkIfLike(long shotsId) {
+        Subscription subscription = shotsDetailRepository.checkIfShotsLike(shotsId)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Subscriber<LikeResponse>() {
+                    @Override
+                    public void onCompleted() {
 
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(LikeResponse likeResponse) {
+
+                    }
+                });
+        compositeSubscription.add(subscription);
     }
 
     @Override
     public void like(long shotsId) {
+        Subscription subscription = shotsDetailRepository.like(shotsId)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Subscriber<LikeResponse>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(LikeResponse likeResponse) {
+
+                    }
+                });
+        compositeSubscription.add(subscription);
 
     }
 
     @Override
     public void unLike(long shotsId) {
+        Subscription subscription = shotsDetailRepository.unLike(shotsId)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Subscriber() {
+                    @Override
+                    public void onCompleted() {
 
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(Object o) {
+
+                    }
+                });
+        compositeSubscription.add(subscription);
     }
 
     @Override
