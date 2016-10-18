@@ -24,7 +24,7 @@ public interface ShotsContract {
 
         void hideLoadingIndicator();
 
-        void onLoadMoreStatusChange(int status);
+        void showLoadMoreFailed();
 
     }
 

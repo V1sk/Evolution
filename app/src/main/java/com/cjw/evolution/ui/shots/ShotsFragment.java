@@ -43,10 +43,7 @@ public class ShotsFragment extends BaseFragment implements ShotsContract.View, S
     @BindView(R.id.swipe_refresh_layout)
     SwipeRefreshLayout swipeRefreshLayout;
 
-    private final int PAGE_SIZE = 10;
-
     private ShotsContract.Presenter presenter;
-//    private ShotsAdapter shotsAdapter;
     private List<Shots> mData = new ArrayList<>();
 
     private ShotsQuickAdapter quickAdapter;
@@ -86,19 +83,9 @@ public class ShotsFragment extends BaseFragment implements ShotsContract.View, S
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         shotsListRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-
         quickAdapter = new ShotsQuickAdapter(mData);
         quickAdapter.openLoadAnimation();
-        quickAdapter.openLoadMore(PAGE_SIZE);
-//        shotsAdapter = new ShotsAdapter(mData, getActivity());
-//        shotsAdapter.setShowLoadMore(true);
-//        shotsAdapter.setOnReloadMoreListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                presenter.loadMore(ShotsFilterType.DEFAULT_SORT);
-//            }
-//        });
-//        shotsListRecyclerView.setAdapter(shotsAdapter);
+        quickAdapter.openLoadMore(ShotsPresenter.PAGE_SIZE);
         shotsListRecyclerView.setAdapter(quickAdapter);
         quickAdapter.setOnLoadMoreListener(this);
         shotsListRecyclerView.addItemDecoration(new ShotsDecoration());
@@ -113,16 +100,6 @@ public class ShotsFragment extends BaseFragment implements ShotsContract.View, S
                 getContext().startActivity(intent, options.toBundle());
             }
         });
-//        shotsListRecyclerView.addOnScrollListener(new LoadMoreListener(new LoadMoreCallback() {
-//            @Override
-//            public void onLoadMore() {
-//                switch (shotsAdapter.getLoadMoreStatus()) {
-//                    case LoadMoreStatus.LOAD_MORE_STATUS_NORMAL:
-//                        presenter.loadMore(ShotsFilterType.DEFAULT_SORT);
-//                        break;
-//                }
-//            }
-//        }));
         swipeRefreshLayout.setOnRefreshListener(this);
         shotsListRecyclerView.setVisibility(View.GONE);
         new ShotsPresenter(ShotsRepository.getInstance(), this).subscribe();
@@ -148,10 +125,7 @@ public class ShotsFragment extends BaseFragment implements ShotsContract.View, S
     public void showShots(List<Shots> shotsList, boolean refresh) {
         if (refresh)
             mData.clear();
-//        mData.addAll(shotsList);
         quickAdapter.addData(shotsList);
-//        quickAdapter.removeAllFooterView();
-//        shotsAdapter.notifyDataSetChanged();
         quickAdapter.notifyDataSetChanged();
     }
 
@@ -162,7 +136,6 @@ public class ShotsFragment extends BaseFragment implements ShotsContract.View, S
 
     @Override
     public void showOrHideEmptyView() {
-//        boolean isEmpty = shotsAdapter.getItemCount() == 0;
         boolean isEmpty = quickAdapter.getItemCount() == 0;
         emptyView.setVisibility(isEmpty ? View.VISIBLE : View.GONE);
         shotsListRecyclerView.setVisibility(isEmpty ? View.GONE : View.VISIBLE);
@@ -184,8 +157,8 @@ public class ShotsFragment extends BaseFragment implements ShotsContract.View, S
     }
 
     @Override
-    public void onLoadMoreStatusChange(int status) {
-//        shotsAdapter.setLoadMoreStatus(status);
+    public void showLoadMoreFailed() {
+        quickAdapter.showLoadMoreFailedView();
     }
 
     @Override
@@ -195,7 +168,6 @@ public class ShotsFragment extends BaseFragment implements ShotsContract.View, S
 
     @Override
     public void onRefresh() {
-//        shotsAdapter.setLoadMoreStatus(LoadMoreStatus.LOAD_MORE_STATUS_NORMAL);
         presenter.refresh(ShotsFilterType.DEFAULT_SORT);
     }
 

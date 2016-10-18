@@ -44,15 +44,5 @@ public class ShotsQuickAdapter extends BaseQuickAdapter<Shots> {
                 .setText(R.id.comment_count, String.valueOf(shots.getComments_count()))
                 .setText(R.id.item_time, TimeUtils.formatShotsTime(shots.getCreated_at()))
                 .setVisible(R.id.icon_attachment, shots.getAttachments_count() > 0);
-//        userName.setText(item.getUser().getName());
-//        if (item.getAttachments_count() > 0) {
-//            iconAttachment.setVisibility(View.VISIBLE);
-//        } else {
-//            iconAttachment.setVisibility(View.GONE);
-//        }
-//        likeCount.setText(String.valueOf(item.getLikes_count()));
-//        commentCount.setText(String.valueOf(item.getComments_count()));
-//        viewCount.setText(String.valueOf(item.getViews_count()));
-//        itemTime.setText(TimeUtils.formatShotsTime(item.getCreated_at()));
     }
 }

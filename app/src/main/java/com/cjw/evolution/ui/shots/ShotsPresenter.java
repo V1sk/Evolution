@@ -2,7 +2,6 @@ package com.cjw.evolution.ui.shots;
 
 import com.cjw.evolution.data.model.Shots;
 import com.cjw.evolution.data.source.ShotsRepository;
-import com.cjw.evolution.ui.common.recyclerview.LoadMoreStatus;
 
 import java.util.List;
 
@@ -21,7 +20,7 @@ public class ShotsPresenter implements ShotsContract.Presenter {
     private CompositeSubscription compositeSubscription;
 
     private int page = 1;
-    private int pageSize = 10;
+    public static final int PAGE_SIZE = 10;
 
     private ShotsRepository shotsRepository;
     private ShotsContract.View view;
@@ -69,8 +68,7 @@ public class ShotsPresenter implements ShotsContract.Presenter {
         } else {
             loadingMore = true;
         }
-        view.onLoadMoreStatusChange(LoadMoreStatus.LOAD_MORE_STATUS_NORMAL);
-        Subscription subscription = shotsRepository.getShots(sort, requestPage, pageSize)
+        Subscription subscription = shotsRepository.getShots(sort, requestPage, PAGE_SIZE)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<List<Shots>>() {
@@ -89,14 +87,14 @@ public class ShotsPresenter implements ShotsContract.Presenter {
                         view.showOrHideEmptyView();
                         view.onGetShotsError(e);
                         if (!refresh) {
-                            view.onLoadMoreStatusChange(LoadMoreStatus.LOAD_MORE_STATUS_FAILED);
+                            view.showLoadMoreFailed();
                         }
                     }
 
                     @Override
                     public void onNext(List<Shots> shotsList) {
                         view.showShots(shotsList, refresh);
-                        if (shotsList.size() == pageSize) {
+                        if (shotsList.size() == PAGE_SIZE) {
                             page++;
                         } else {
                             hasMoreData = false;
