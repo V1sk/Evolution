@@ -24,7 +24,9 @@ public interface ShotsDetailContract {
 
         void showOrHideEmptyView();
 
-        void onLoadingStatusChange(int status);
+        void noMoreComments();
+
+        void onLoadMoreCommentFailed();
     }
 
     interface Presenter extends BasePresenter {

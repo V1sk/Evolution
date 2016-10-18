@@ -24,9 +24,7 @@ public class ShotsDetailPresenter implements ShotsDetailContract.Presenter {
     private ShotsDetailContract.View view;
 
     private int page = 1;
-    private int pageSize = 30;
-    private boolean hasMoreData = true;
-    private boolean loadingMore = false;
+    public static final int PAGE_SIZE = 5;
 
     public ShotsDetailPresenter(ShotsDetailRepository shotsDetailRepository, ShotsDetailContract.View view) {
         this.shotsDetailRepository = shotsDetailRepository;
@@ -37,7 +35,7 @@ public class ShotsDetailPresenter implements ShotsDetailContract.Presenter {
 
     @Override
     public void getCommentList(long shotsId) {
-        Subscription subscription = shotsDetailRepository.getComments(shotsId, page, pageSize)
+        Subscription subscription = shotsDetailRepository.getComments(shotsId, page, PAGE_SIZE)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Subscriber<List<Comment>>() {
@@ -48,11 +46,17 @@ public class ShotsDetailPresenter implements ShotsDetailContract.Presenter {
 
                     @Override
                     public void onError(Throwable e) {
+                        view.onLoadMoreCommentFailed();
                         view.onGetCommentError(e.getMessage());
                     }
 
                     @Override
                     public void onNext(List<Comment> comments) {
+                        if (comments.size() == PAGE_SIZE) {
+                            page++;
+                        } else {
+                            view.noMoreComments();
+                        }
                         view.onGetCommentSuccess(comments);
                     }
                 });

@@ -1,5 +1,6 @@
 package com.cjw.evolution.ui.shotsdetail;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
@@ -11,12 +12,20 @@ import android.support.v7.view.ViewPropertyAnimatorCompatSet;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
+import android.text.TextUtils;
 import android.transition.Transition;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.cjw.evolution.R;
 import com.cjw.evolution.data.ExtrasKey;
 import com.cjw.evolution.data.model.Comment;
@@ -31,8 +40,9 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import de.hdodenhof.circleimageview.CircleImageView;
 
-public class ShotsDetailActivity extends BaseActivity implements ShotsDetailContract.View {
+public class ShotsDetailActivity extends BaseActivity implements ShotsDetailContract.View, BaseQuickAdapter.RequestLoadMoreListener {
 
     final long ANIMATION_DURATION = 500;
 
@@ -49,11 +59,14 @@ public class ShotsDetailActivity extends BaseActivity implements ShotsDetailCont
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
 
+    private View notLoadingView;
+
     private ShotsDetailContract.Presenter presenter;
     private Shots shots;
     private List<Comment> commentList = new ArrayList<>();
-    private ShotsDetailAdapter detailAdapter;
     private RecyclerView.LayoutManager layoutManager;
+
+    private ShotsDetailQuickAdapter shotsDetailQuickAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +77,17 @@ public class ShotsDetailActivity extends BaseActivity implements ShotsDetailCont
         getWindow().getSharedElementReturnTransition().addListener(shotReturnHomeListener);
         supportActionBar(toolbar);
         getExtras();
+
+        shotsDetailQuickAdapter = new ShotsDetailQuickAdapter(commentList);
+        shotsDetailQuickAdapter.openLoadAnimation();
+        shotsDetailQuickAdapter.openLoadMore(5);
+        shotsDetailQuickAdapter.setOnLoadMoreListener(this);
+
+        View headView = LayoutInflater.from(this).inflate(R.layout.shots_detail_layout, null);
+        HeaderViewHolder headerViewHolder = new HeaderViewHolder(headView);
+        shotsDetailQuickAdapter.addHeaderView(headView);
+        headerViewHolder.setData(shots);
+
         collapsingToolbar.setTitle(shots.getTitle());
         collapsingToolbar.setCollapsedTitleTextAppearance(R.style.ExpandedToolbar);
         collapsingToolbar.setExpandedTitleTextAppearance(R.style.ExpandedToolbar);
@@ -77,9 +101,10 @@ public class ShotsDetailActivity extends BaseActivity implements ShotsDetailCont
                 .into(shotsImage);
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-        detailAdapter = new ShotsDetailAdapter(shots, commentList);
-        recyclerView.setAdapter(detailAdapter);
+//        detailAdapter = new ShotsDetailAdapter(shots, commentList);
+        recyclerView.setAdapter(shotsDetailQuickAdapter);
         new ShotsDetailPresenter(ShotsDetailRepository.getInstance(), this).subscribe();
+        shotsDetailQuickAdapter.hiedLoadingMore();
         presenter.getCommentList(shots.getId());
     }
 
@@ -129,8 +154,8 @@ public class ShotsDetailActivity extends BaseActivity implements ShotsDetailCont
 
     @Override
     public void onGetCommentSuccess(List<Comment> commentList) {
-        this.commentList.addAll(commentList);
-        detailAdapter.notifyDataSetChanged();
+//        this.commentList.addAll(commentList);
+        shotsDetailQuickAdapter.addData(commentList);
     }
 
     @Override
@@ -154,12 +179,78 @@ public class ShotsDetailActivity extends BaseActivity implements ShotsDetailCont
     }
 
     @Override
-    public void onLoadingStatusChange(int status) {
+    public void noMoreComments() {
+        shotsDetailQuickAdapter.loadComplete();
+        if (notLoadingView == null)
+            notLoadingView = getLayoutInflater().inflate(R.layout.not_loading, (ViewGroup) recyclerView.getParent(), false);
+        shotsDetailQuickAdapter.addFooterView(notLoadingView);
+    }
 
+    @Override
+    public void onLoadMoreCommentFailed() {
+        shotsDetailQuickAdapter.showLoadMoreFailedView();
     }
 
     @Override
     public void setPresenter(ShotsDetailContract.Presenter presenter) {
         this.presenter = presenter;
+    }
+
+    @Override
+    public void onLoadMoreRequested() {
+        presenter.getCommentList(shots.getId());
+    }
+
+    static class HeaderViewHolder {
+        @BindView(R.id.item_title)
+        TextView itemTitle;
+        @BindView(R.id.item_summary)
+        TextView itemSummary;
+        @BindView(R.id.user_name)
+        TextView userName;
+        @BindView(R.id.avatar)
+        CircleImageView avatar;
+        @BindView(R.id.user_layout)
+        LinearLayout userLayout;
+        @BindView(R.id.ic_like)
+        ImageView icLike;
+        @BindView(R.id.txt_like_count)
+        TextView txtLikeCount;
+        @BindView(R.id.layout_like)
+        RelativeLayout layoutLike;
+        @BindView(R.id.ic_view)
+        ImageView icView;
+        @BindView(R.id.txt_view_count)
+        TextView txtViewCount;
+        @BindView(R.id.item_views)
+        RelativeLayout itemViews;
+        @BindView(R.id.ic_share)
+        ImageView icShare;
+        @BindView(R.id.share)
+        TextView share;
+        @BindView(R.id.share_layout)
+        RelativeLayout shareLayout;
+
+        private Context context;
+
+        HeaderViewHolder(View view) {
+            ButterKnife.bind(this, view);
+            context = view.getContext();
+        }
+
+        public void setData(Shots shots) {
+            itemTitle.setText(shots.getTitle());
+            String description = !TextUtils.isEmpty(shots.getDescription()) ? shots.getDescription() : "";
+            itemSummary.setText(Html.fromHtml(description).toString().trim());
+            userName.setText(shots.getUser().getName());
+            Glide.with(context)
+                    .load(shots.getUser().getAvatar_url())
+                    .placeholder(R.drawable.head_default)
+                    .override(100, 100)
+                    .crossFade()
+                    .into(avatar);
+            txtLikeCount.setText(String.format(context.getString(R.string.like_count), String.valueOf(shots.getLikes_count())));
+            txtViewCount.setText(String.format(context.getString(R.string.view_count), String.valueOf(shots.getViews_count())));
+        }
     }
 }
