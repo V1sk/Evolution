@@ -40,5 +40,5 @@ public interface DribbbleApiService {
     Observable<LikeResponse> checkIfLike(@Path("id") long id);
 
     @DELETE("shots/{id}/like")
-    Observable unLike(@Path("id") long id);
+    Observable<Object> unLike(@Path("id") long id);
 }

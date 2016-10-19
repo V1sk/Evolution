@@ -74,17 +74,16 @@ public class ShotsDetailPresenter implements ShotsDetailContract.Presenter {
                 .subscribe(new Subscriber<LikeResponse>() {
                     @Override
                     public void onCompleted() {
-
                     }
 
                     @Override
                     public void onError(Throwable e) {
-
+                        view.onUnLikeShots();
                     }
 
                     @Override
                     public void onNext(LikeResponse likeResponse) {
-
+                        view.onLikeShots();
                     }
                 });
         compositeSubscription.add(subscription);
@@ -103,12 +102,12 @@ public class ShotsDetailPresenter implements ShotsDetailContract.Presenter {
 
                     @Override
                     public void onError(Throwable e) {
-
+                        view.onUnLikeShots();
                     }
 
                     @Override
                     public void onNext(LikeResponse likeResponse) {
-
+                        view.onLikeShots();
                     }
                 });
         compositeSubscription.add(subscription);
@@ -133,7 +132,7 @@ public class ShotsDetailPresenter implements ShotsDetailContract.Presenter {
 
                     @Override
                     public void onNext(Object o) {
-
+                        view.onUnLikeShots();
                     }
                 });
         compositeSubscription.add(subscription);

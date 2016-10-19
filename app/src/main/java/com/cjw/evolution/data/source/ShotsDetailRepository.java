@@ -46,7 +46,7 @@ public class ShotsDetailRepository implements ShotsDetailContract {
     }
 
     @Override
-    public Observable unLike(long shotsId) {
+    public Observable<Object> unLike(long shotsId) {
         return dribbbleApiService.unLike(shotsId);
     }
 }

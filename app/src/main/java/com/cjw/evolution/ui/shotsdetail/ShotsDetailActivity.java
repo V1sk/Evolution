@@ -72,6 +72,8 @@ public class ShotsDetailActivity extends BaseActivity implements ShotsDetailCont
 
     private ShotsDetailQuickAdapter shotsDetailQuickAdapter;
 
+    private boolean isLike = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,6 +96,7 @@ public class ShotsDetailActivity extends BaseActivity implements ShotsDetailCont
         recyclerView.setAdapter(shotsDetailQuickAdapter);
         new ShotsDetailPresenter(ShotsDetailRepository.getInstance(), this).subscribe();
         presenter.getCommentList(shots.getId());
+        presenter.checkIfLike(shots.getId());
     }
 
     private void initAppBar() {
@@ -111,9 +114,9 @@ public class ShotsDetailActivity extends BaseActivity implements ShotsDetailCont
     }
 
     private void initFooterView() {
-        footerView = getLayoutInflater().inflate(R.layout.item_load_more_layout, (ViewGroup) recyclerView.getParent(),false);
-        loadingView = (ProgressBar)footerView.findViewById(R.id.progress_bar);
-        retryView = (ImageView)footerView.findViewById(R.id.btn_reload);
+        footerView = getLayoutInflater().inflate(R.layout.item_load_more_layout, (ViewGroup) recyclerView.getParent(), false);
+        loadingView = (ProgressBar) footerView.findViewById(R.id.progress_bar);
+        retryView = (ImageView) footerView.findViewById(R.id.btn_reload);
         shotsDetailQuickAdapter.addFooterView(footerView);
     }
 
@@ -138,6 +141,11 @@ public class ShotsDetailActivity extends BaseActivity implements ShotsDetailCont
 
     @OnClick(R.id.fab)
     public void onClick() {
+        if (!isLike) {
+            presenter.like(shots.getId());
+        } else {
+            presenter.unLike(shots.getId());
+        }
     }
 
     private void getExtras() {
@@ -197,12 +205,14 @@ public class ShotsDetailActivity extends BaseActivity implements ShotsDetailCont
 
     @Override
     public void onLikeShots() {
-
+        isLike = true;
+        fab.setImageResource(R.drawable.ic_favorite_white_24dp);
     }
 
     @Override
     public void onUnLikeShots() {
-
+        isLike = false;
+        fab.setImageResource(R.drawable.ic_favorite_outline_white_24dp);
     }
 
     @Override

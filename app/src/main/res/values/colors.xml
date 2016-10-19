@@ -3,6 +3,7 @@
     <color name="colorPrimary">#FFFFFF</color>
     <color name="colorPrimaryDark">#C1C1C1</color>
     <color name="colorAccent">#212121</color>
+    <color name="colorControlHighlight">#616161</color>
 
     <color name="statusBar">#FFFFFF</color>
     <color name="textColorPrimary">#212121</color>
