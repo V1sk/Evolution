@@ -24,7 +24,7 @@ public class ShotsDetailPresenter implements ShotsDetailContract.Presenter {
     private ShotsDetailContract.View view;
 
     private int page = 1;
-    public static final int PAGE_SIZE = 5;
+    public static final int PAGE_SIZE = 20;
 
     public ShotsDetailPresenter(ShotsDetailRepository shotsDetailRepository, ShotsDetailContract.View view) {
         this.shotsDetailRepository = shotsDetailRepository;
@@ -46,18 +46,21 @@ public class ShotsDetailPresenter implements ShotsDetailContract.Presenter {
 
                     @Override
                     public void onError(Throwable e) {
-                        view.onLoadMoreCommentFailed();
-                        view.onGetCommentError(e.getMessage());
+                        if (page == 1) {
+                            view.onGetCommentError(e.getMessage());
+                        } else {
+                            view.onLoadMoreCommentFailed();
+                        }
                     }
 
                     @Override
                     public void onNext(List<Comment> comments) {
+                        view.onGetCommentSuccess(comments);
                         if (comments.size() == PAGE_SIZE) {
                             page++;
                         } else {
                             view.noMoreComments();
                         }
-                        view.onGetCommentSuccess(comments);
                     }
                 });
         compositeSubscription.add(subscription);

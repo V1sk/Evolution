@@ -20,6 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -60,6 +61,9 @@ public class ShotsDetailActivity extends BaseActivity implements ShotsDetailCont
     RecyclerView recyclerView;
 
     private View notLoadingView;
+    private ProgressBar loadingView;
+    private ImageView retryView;
+    View footerView;
 
     private ShotsDetailContract.Presenter presenter;
     private Shots shots;
@@ -79,15 +83,20 @@ public class ShotsDetailActivity extends BaseActivity implements ShotsDetailCont
         getExtras();
 
         shotsDetailQuickAdapter = new ShotsDetailQuickAdapter(commentList);
-        shotsDetailQuickAdapter.openLoadAnimation();
-        shotsDetailQuickAdapter.openLoadMore(5);
-        shotsDetailQuickAdapter.setOnLoadMoreListener(this);
+        openLoadMore();
 
-        View headView = LayoutInflater.from(this).inflate(R.layout.shots_detail_layout, null);
-        HeaderViewHolder headerViewHolder = new HeaderViewHolder(headView);
-        shotsDetailQuickAdapter.addHeaderView(headView);
-        headerViewHolder.setData(shots);
+        initHeaderView();
+        initFooterView();
+        initAppBar();
 
+        layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(shotsDetailQuickAdapter);
+        new ShotsDetailPresenter(ShotsDetailRepository.getInstance(), this).subscribe();
+        presenter.getCommentList(shots.getId());
+    }
+
+    private void initAppBar() {
         collapsingToolbar.setTitle(shots.getTitle());
         collapsingToolbar.setCollapsedTitleTextAppearance(R.style.ExpandedToolbar);
         collapsingToolbar.setExpandedTitleTextAppearance(R.style.ExpandedToolbar);
@@ -99,13 +108,26 @@ public class ShotsDetailActivity extends BaseActivity implements ShotsDetailCont
                 .crossFade()
                 .override(imageSize[0], imageSize[1])
                 .into(shotsImage);
-        layoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(layoutManager);
-//        detailAdapter = new ShotsDetailAdapter(shots, commentList);
-        recyclerView.setAdapter(shotsDetailQuickAdapter);
-        new ShotsDetailPresenter(ShotsDetailRepository.getInstance(), this).subscribe();
-        shotsDetailQuickAdapter.hiedLoadingMore();
-        presenter.getCommentList(shots.getId());
+    }
+
+    private void initFooterView() {
+        footerView = getLayoutInflater().inflate(R.layout.item_load_more_layout, (ViewGroup) recyclerView.getParent(),false);
+        loadingView = (ProgressBar)footerView.findViewById(R.id.progress_bar);
+        retryView = (ImageView)footerView.findViewById(R.id.btn_reload);
+        shotsDetailQuickAdapter.addFooterView(footerView);
+    }
+
+    private void initHeaderView() {
+        View headView = LayoutInflater.from(this).inflate(R.layout.shots_detail_layout, null);
+        HeaderViewHolder headerViewHolder = new HeaderViewHolder(headView);
+        shotsDetailQuickAdapter.addHeaderView(headView);
+        headerViewHolder.setData(shots);
+    }
+
+    private void openLoadMore() {
+        shotsDetailQuickAdapter.openLoadAnimation();
+        shotsDetailQuickAdapter.openLoadMore(ShotsDetailPresenter.PAGE_SIZE);
+        shotsDetailQuickAdapter.setOnLoadMoreListener(this);
     }
 
     @Override
@@ -154,13 +176,23 @@ public class ShotsDetailActivity extends BaseActivity implements ShotsDetailCont
 
     @Override
     public void onGetCommentSuccess(List<Comment> commentList) {
-//        this.commentList.addAll(commentList);
+        shotsDetailQuickAdapter.removeFooterView(footerView);
         shotsDetailQuickAdapter.addData(commentList);
+        openLoadMore();
     }
 
     @Override
     public void onGetCommentError(String err) {
-
+        loadingView.setVisibility(View.INVISIBLE);
+        retryView.setVisibility(View.VISIBLE);
+        retryView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                loadingView.setVisibility(View.VISIBLE);
+                retryView.setVisibility(View.INVISIBLE);
+                onLoadMoreRequested();
+            }
+        });
     }
 
     @Override
@@ -188,7 +220,7 @@ public class ShotsDetailActivity extends BaseActivity implements ShotsDetailCont
 
     @Override
     public void onLoadMoreCommentFailed() {
-        shotsDetailQuickAdapter.showLoadMoreFailedView();
+        shotsDetailQuickAdapter.removeFooterView(footerView);
     }
 
     @Override
