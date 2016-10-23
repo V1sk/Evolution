@@ -19,9 +19,9 @@ import com.cjw.evolution.account.UserSession;
 import com.cjw.evolution.data.model.User;
 import com.cjw.evolution.ui.base.BaseActivity;
 import com.cjw.evolution.ui.base.BaseFragment;
-import com.cjw.evolution.ui.designers.DesignersFragment;
+import com.cjw.evolution.ui.about.AboutFragment;
 import com.cjw.evolution.ui.shots.ShotsFragment;
-import com.cjw.evolution.ui.teams.TeamsFragment;
+import com.cjw.evolution.ui.following.FollowingFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -55,8 +55,8 @@ public class MainActivity extends BaseActivity {
         final String[] tabTitles = getResources().getStringArray(R.array.evo_main_tab_titles);
         final BaseFragment[] fragments = new BaseFragment[tabTitles.length];
         fragments[0] = ShotsFragment.newInstance();
-        fragments[1] = DesignersFragment.newInstance();
-        fragments[2] = TeamsFragment.newInstance();
+        fragments[1] = FollowingFragment.newInstance();
+        fragments[2] = AboutFragment.newInstance();
 
         MainTabAdapter adapter = new MainTabAdapter(getSupportFragmentManager(), tabTitles, fragments);
         viewPager.setAdapter(adapter);

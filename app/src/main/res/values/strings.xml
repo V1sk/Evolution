@@ -3,13 +3,13 @@
 
     <!-- Main -->
     <string name="evo.main.tab.shots">Shots</string>
-    <string name="evo.main.tab.designers">Designers</string>
-    <string name="evo.main.tab.teams">Teams</string>
+    <string name="evo.main.tab.about">About</string>
+    <string name="evo.main.tab.following">Following</string>
 
     <string-array name="evo_main_tab_titles">
         <item>@string/evo.main.tab.shots</item>
-        <item>@string/evo.main.tab.designers</item>
-        <item>@string/evo.main.tab.teams</item>
+        <item>@string/evo.main.tab.following</item>
+        <item>@string/evo.main.tab.about</item>
     </string-array>
 
     <!-- TODO: Remove or change this placeholder text -->
@@ -31,5 +31,6 @@
     <string name="view_count">%s Views</string>
     <string name="no_comment">no comments</string>
     <string name="reply_hint">Add a comment</string>
+    <string name="filter">Filter</string>
 
 </resources>

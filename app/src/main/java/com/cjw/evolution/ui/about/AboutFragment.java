@@ -1,4 +1,4 @@
-package com.cjw.evolution.ui.teams;
+package com.cjw.evolution.ui.about;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,15 +11,16 @@ import com.cjw.evolution.R;
 import com.cjw.evolution.ui.base.BaseFragment;
 
 
-public class TeamsFragment extends BaseFragment {
+public class AboutFragment extends BaseFragment {
 
-    public TeamsFragment() {
+
+    public AboutFragment() {
         // Required empty public constructor
     }
 
 
-    public static TeamsFragment newInstance() {
-        TeamsFragment fragment = new TeamsFragment();
+    public static AboutFragment newInstance() {
+        AboutFragment fragment = new AboutFragment();
         return fragment;
     }
 
@@ -33,13 +34,12 @@ public class TeamsFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_teams, container, false);
+        return inflater.inflate(R.layout.fragment_about, container, false);
     }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.menu_teams, menu);
-
+        inflater.inflate(R.menu.menu_about,menu);
     }
 }

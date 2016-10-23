@@ -1,4 +1,4 @@
-package com.cjw.evolution.ui.designers;
+package com.cjw.evolution.ui.following;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,16 +11,15 @@ import com.cjw.evolution.R;
 import com.cjw.evolution.ui.base.BaseFragment;
 
 
-public class DesignersFragment extends BaseFragment {
+public class FollowingFragment extends BaseFragment {
 
-
-    public DesignersFragment() {
+    public FollowingFragment() {
         // Required empty public constructor
     }
 
 
-    public static DesignersFragment newInstance() {
-        DesignersFragment fragment = new DesignersFragment();
+    public static FollowingFragment newInstance() {
+        FollowingFragment fragment = new FollowingFragment();
         return fragment;
     }
 
@@ -34,12 +33,13 @@ public class DesignersFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_designers, container, false);
+        return inflater.inflate(R.layout.fragment_following, container, false);
     }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.menu_designers,menu);
+        inflater.inflate(R.menu.menu_following, menu);
+
     }
 }
