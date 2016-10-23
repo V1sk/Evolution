@@ -11,6 +11,8 @@
         <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
         <item name="android:textColorPrimary">@color/textColorPrimary</item>
         <item name="android:textColorSecondary">@color/textColorSecondary</item>
+
+        <item name="android:listDivider">@drawable/divider</item>
     </style>
 
     <style name="FFStyle.MainTab" parent="Widget.Design.TabLayout">

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?android:attr/selectableItemBackground"
+    android:padding="@dimen/default_item_padding">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/user_avatar"
+        android:layout_width="@dimen/avatarSize"
+        android:layout_height="@dimen/avatarSize"
+        android:src="@color/colorControlHighlight" />
+
+    <TextView
+        android:id="@+id/user_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/mediumSpace"
+        android:layout_toRightOf="@id/user_avatar"
+        android:text="Hella_Flush"
+        android:textColor="@color/textColorPrimary"
+        android:textSize="@dimen/user_name_text_size"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/user_location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/user_name"
+        android:layout_marginLeft="@dimen/mediumSpace"
+        android:layout_marginTop="@dimen/smallSpace"
+        android:layout_toRightOf="@id/user_avatar"
+        android:text="New York City"
+        android:textColor="@color/textColorSecondary"
+        android:textSize="@dimen/normal_text_size" />
+
+    <TextView
+        android:id="@+id/user_bio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/user_location"
+        android:layout_marginLeft="@dimen/mediumSpace"
+        android:layout_marginTop="@dimen/smallSpace"
+        android:layout_toRightOf="@id/user_avatar"
+        android:text="For me, designing equates to freedom. The very fact that few straight lines arranged in order can turn complicated ideas into simplicity is just liberating."
+        android:textColor="@color/textColorSecondary"
+        android:textSize="@dimen/normal_text_size" />
+
+</RelativeLayout>
