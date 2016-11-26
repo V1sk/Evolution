@@ -25,11 +25,11 @@ task clean(type: Delete) {
 ext {
     // Sdk and tools
     minSdkVersion = 21
-    targetSdkVersion = 24
-    compileSdkVersion = 24
-    buildToolsVersion = '24.0.0'
+    targetSdkVersion = 25
+    compileSdkVersion = 25
+    buildToolsVersion = '25.0.0'
 
-    supportLibraryVersion = '24.2.1'
+    supportLibraryVersion = '25.0.0'
     retrofitVersion = '2.1.+'
 
     libs = [
