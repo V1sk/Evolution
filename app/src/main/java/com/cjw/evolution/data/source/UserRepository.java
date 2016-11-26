@@ -1,7 +1,5 @@
 package com.cjw.evolution.data.source;
 
-import android.os.Handler;
-
 import com.cjw.evolution.data.Injection;
 import com.cjw.evolution.data.model.User;
 import com.cjw.evolution.data.source.local.LocalUserDataSource;
@@ -17,10 +15,8 @@ public class UserRepository implements UserContract {
 
     private UserContract.Local mLocalDataSource;
     private UserContract.Remote mRemoteDataSource;
-    private Handler handler;
 
     private UserRepository() {
-        handler = new Handler();
         this.mLocalDataSource = new LocalUserDataSource();
         this.mRemoteDataSource = new RemoteUserDataSource(Injection.provideDribbbleApi());
     }
