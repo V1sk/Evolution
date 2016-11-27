@@ -35,6 +35,16 @@
         <item name="android:textColor">@android:color/transparent</item>
     </style>
 
-    <dimen name="tab.indicator.height">2dp</dimen>
-    <dimen name="padding.normal">8dp</dimen>
+    <style name="TextMediumBold">
+        <item name="android:textSize">@dimen/text_medium</item>
+        <item name="android:textColor">@color/textColorPrimary</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextNormalBold">
+        <item name="android:textSize">@dimen/small_text_size</item>
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
 </resources>

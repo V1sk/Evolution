@@ -1,5 +1,6 @@
 package com.cjw.evolution.ui.following;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -14,12 +15,13 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.chad.library.adapter.base.listener.OnItemChildClickListener;
+import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.cjw.evolution.R;
 import com.cjw.evolution.data.model.Following;
 import com.cjw.evolution.data.source.FollowingRepository;
 import com.cjw.evolution.ui.base.BaseFragment;
 import com.cjw.evolution.ui.common.LineDividerDecoration;
+import com.cjw.evolution.ui.profile.ProfileActivity;
 import com.cjw.evolution.ui.shots.ShotsPresenter;
 
 import java.util.ArrayList;
@@ -80,10 +82,10 @@ public class FollowingFragment extends BaseFragment implements FollowingContract
         followingAdapter.setOnLoadMoreListener(this);
         swipeRefreshLayout.setOnRefreshListener(this);
         followingListRecyclerView.setVisibility(View.GONE);
-        followingListRecyclerView.addOnItemTouchListener(new OnItemChildClickListener() {
+        followingListRecyclerView.addOnItemTouchListener(new OnItemClickListener() {
             @Override
-            public void SimpleOnItemChildClick(BaseQuickAdapter baseQuickAdapter, View view, int i) {
-
+            public void SimpleOnItemClick(BaseQuickAdapter baseQuickAdapter, View view, int i) {
+                startActivity(new Intent(getActivity(), ProfileActivity.class));
             }
         });
         new FollowingPresenter(FollowingRepository.getInstance(), this).subscribe();

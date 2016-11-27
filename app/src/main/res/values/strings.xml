@@ -32,5 +32,7 @@
     <string name="no_comment">no comments</string>
     <string name="reply_hint">Add a comment</string>
     <string name="filter">Filter</string>
+    <string name="followers">Followers</string>
+    <string name="follow">Follow</string>
 
 </resources>
