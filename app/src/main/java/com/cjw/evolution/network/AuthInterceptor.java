@@ -37,7 +37,7 @@ public class AuthInterceptor implements Interceptor {
     @Override
     public Response intercept(Chain chain) throws IOException {
         if (UserSession.getInstance().isSignedIn()) {
-            accessToken = UserSession.getInstance().getmToken().getAccess_token();
+            accessToken = UserSession.getInstance().getToken().getAccess_token();
         }
         final Request request = chain.request().newBuilder()
                 .addHeader("Authorization", "Bearer " + accessToken)

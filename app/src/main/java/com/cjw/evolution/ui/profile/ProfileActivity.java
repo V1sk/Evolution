@@ -45,7 +45,7 @@ public class ProfileActivity extends BaseActivity {
     }
 
     private void initAppBar() {
-        User user = UserSession.getInstance().getmUser();
+        User user = UserSession.getInstance().getUser();
         Glide.with(this)
                 .load(user.getAvatar_url())
                 .centerCrop()

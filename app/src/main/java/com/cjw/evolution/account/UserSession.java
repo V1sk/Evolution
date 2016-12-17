@@ -18,6 +18,7 @@ import rx.functions.Func1;
 
 /**
  * Created by CJW on 2016/10/1.
+ * 账号模块封装
  */
 
 public class UserSession {
@@ -106,19 +107,19 @@ public class UserSession {
         return mToken != null && mToken.getAccess_token() != null;
     }
 
-    public Token getmToken() {
+    public Token getToken() {
         return mToken;
     }
 
-    public void setmToken(Token mToken) {
+    public void setToken(Token mToken) {
         this.mToken = mToken;
     }
 
-    public User getmUser() {
+    public User getUser() {
         return mUser;
     }
 
-    public void setmUser(User mUser) {
+    public void setUser(User mUser) {
         this.mUser = mUser;
     }
 }

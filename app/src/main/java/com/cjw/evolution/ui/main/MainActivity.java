@@ -115,7 +115,7 @@ public class MainActivity extends BaseActivity {
         final ImageView avatar = (ImageView) navigationView.findViewById(R.id.avatar);
         ImageView blurBg = (ImageView) navigationView.findViewById(R.id.blur_bg);
         TextView userName = (TextView) navigationView.findViewById(R.id.user_name);
-        User user = UserSession.getInstance().getmUser();
+        User user = UserSession.getInstance().getUser();
         Glide.with(this)
                 .load(user.getAvatar_url())
                 .centerCrop()
