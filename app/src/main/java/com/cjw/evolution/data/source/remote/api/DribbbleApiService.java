@@ -11,6 +11,7 @@ import java.util.List;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 import rx.Observable;
@@ -46,4 +47,13 @@ public interface DribbbleApiService {
     @GET("user/following")
     Observable<List<Following>> getFollowing(@Query("page") int page,
                                              @Query("per_page") int pageSize);
+
+    @GET("user/following/{user}")
+    Observable<Void> following(@Path("user") long userId);
+
+    @PUT("users/{user}/follow")
+    Observable<Void> follow(@Path("user") long userId);
+
+    @DELETE("users/{user}/follow")
+    Observable<Void> unfollow(@Path("user") long userId);
 }

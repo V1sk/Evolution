@@ -74,7 +74,7 @@ public class FollowingFragment extends BaseFragment implements FollowingContract
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         followingListRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        followingListRecyclerView.addItemDecoration(new LineDividerDecoration(getActivity(),LineDividerDecoration.VERTICAL_LIST));
+        followingListRecyclerView.addItemDecoration(new LineDividerDecoration(getActivity(), LineDividerDecoration.VERTICAL_LIST));
         followingAdapter = new FollowingAdapter(userList);
         followingAdapter.openLoadAnimation();
         followingAdapter.openLoadMore(ShotsPresenter.PAGE_SIZE);
@@ -85,7 +85,9 @@ public class FollowingFragment extends BaseFragment implements FollowingContract
         followingListRecyclerView.addOnItemTouchListener(new OnItemClickListener() {
             @Override
             public void SimpleOnItemClick(BaseQuickAdapter baseQuickAdapter, View view, int i) {
-                startActivity(new Intent(getActivity(), ProfileActivity.class));
+                Intent intent = new Intent(getActivity(), ProfileActivity.class);
+                intent.putExtra(ProfileActivity.EXTRA_FOLLOWING, (Following) baseQuickAdapter.getItem(i));
+                startActivity(intent);
             }
         });
         new FollowingPresenter(FollowingRepository.getInstance(), this).subscribe();

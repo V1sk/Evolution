@@ -34,5 +34,6 @@
     <string name="filter">Filter</string>
     <string name="followers">Followers</string>
     <string name="follow">Follow</string>
+    <string name="unfollow">UnFollow</string>
 
 </resources>

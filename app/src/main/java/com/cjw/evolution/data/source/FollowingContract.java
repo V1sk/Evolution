@@ -14,4 +14,10 @@ public interface FollowingContract {
 
     Observable<List<Following>> getFollowing(int page, int pageSize);
 
+    Observable<Void> following(long userId);
+
+    Observable<Void> follow(long userId);
+
+    Observable<Void> unfollow(long userId);
+
 }

@@ -25,7 +25,7 @@ public class FollowingAdapter extends BaseQuickAdapter<Following> {
         Glide.with(mContext)
                 .load(following.getFollowee().getAvatar_url())
                 .placeholder(R.drawable.head_default)
-                .override(100, 100)
+                .override(200, 200)
                 .dontAnimate()
                 .into((ImageView) baseViewHolder.getView(R.id.user_avatar));
         baseViewHolder.setText(R.id.user_name, following.getFollowee().getUsername())

@@ -32,4 +32,19 @@ public class FollowingRepository implements FollowingContract {
     public Observable<List<Following>> getFollowing(int page, int pageSize) {
         return dribbbleApiService.getFollowing(page, pageSize);
     }
+
+    @Override
+    public Observable<Void> following(long userId) {
+        return dribbbleApiService.following(userId);
+    }
+
+    @Override
+    public Observable<Void> follow(long userId) {
+        return dribbbleApiService.follow(userId);
+    }
+
+    @Override
+    public Observable<Void> unfollow(long userId) {
+        return dribbbleApiService.unfollow(userId);
+    }
 }
