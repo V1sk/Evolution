@@ -3,7 +3,12 @@ Dribbble Android客户端，个人练习项目，取名Evolution，希望自己�
   
 项目采用MVP架构(使用Gooole的[TODO-MVP](https://github.com/googlesamples/android-architecture/tree/todo-mvp/ "TODO-MVP")模式)，使用RxJava + Retrofix作为网络请求模块，greenDao作为数据库存储模块。MaterialDesign，以及一些Android5.0以上的动画效果。
 
-![shots](http://d.pr/i/YSt3) ![shots](http://d.pr/i/PQKS) ![shots](http://d.pr/i/1cqOg) ![shots](http://d.pr/i/KVkZ) ![shots](http://d.pr/i/mRIB) ![shots](http://d.pr/i/qgjs)  
+![image](http://d.pr/i/YSt3)
+![image](http://d.pr/i/PQKS)
+![image](http://d.pr/i/1cqOg)
+![image](http://d.pr/i/KVkZ)
+![image](http://d.pr/i/mRIB)
+![image](http://d.pr/i/qgjs)  
   
 # 项目引用的第三方开源库
 1. RxJava: [https://github.com/ReactiveX/RxJava](https://github.com/ReactiveX/RxJava)  
