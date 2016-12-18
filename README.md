@@ -21,6 +21,12 @@ Dribbble Android客户端，个人练习项目，取名Evolution，希望自己�
 6. greenDao: [https://github.com/greenrobot/greenDAO](https://github.com/greenrobot/greenDAO)  
 7. BaseRecyclerViewAdapterHelper: [https://github.com/CymChad/BaseRecyclerViewAdapterHelper](https://github.com/CymChad/BaseRecyclerViewAdapterHelper)  
 
+#TODO
+1. 增加评论功能  
+2. 增加分类查询  
+3. 增加首页Grid浏览模式  
+4. Profile页面完善
+
 #参考项目
 1. Google TODO-MVP: [https://github.com/googlesamples/android-architecture/tree/todo-mvp](https://github.com/googlesamples/android-architecture/tree/todo-mvp)  
 2.  ryanhoo fir.flight: [https://github.com/ryanhoo/fir.flight](https://github.com/ryanhoo/fir.flight)  
