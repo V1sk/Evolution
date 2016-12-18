@@ -5,10 +5,13 @@ Dribbble Android客户端，个人练习项目，取名Evolution，希望自己�
 
 ![image](https://github.com/V1sk/Evolution/raw/master/screenshot/Screenshot_1.png)
 ![image](https://github.com/V1sk/Evolution/raw/master/screenshot/Screenshot_2.png)
+  
+  
 ![image](https://github.com/V1sk/Evolution/raw/master/screenshot/Screenshot_3.png)
 ![image](https://github.com/V1sk/Evolution/raw/master/screenshot/Screenshot_4.png)
+  
 ![image](https://github.com/V1sk/Evolution/raw/master/screenshot/Screenshot_5.png)
-![image](https://github.com/V1sk/Evolution/raw/master/screenshot/Screenshot_6.png)  
+![image](https://github.com/V1sk/Evolution/raw/master/screenshot/Screenshot_6.png)
   
 # 项目引用的第三方开源库
 1. RxJava: [https://github.com/ReactiveX/RxJava](https://github.com/ReactiveX/RxJava)  
