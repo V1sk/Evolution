@@ -24,6 +24,9 @@ public interface DribbbleApiService {
     @GET("shots")
     Observable<List<Shots>> getShots(@Query("sort") String sort, @Query("page") int page, @Query("per_page") int pageSize);
 
+    @GET("users/{user}/shots")
+    Observable<List<Shots>> listShotsForUser(@Path("user") long userId, @Query("page") int page, @Query("per_page") int pageSize);
+
     @GET("shots")
     Observable<List<Shots>> getTeamsShots(@Query("list") String teams, @Query("page") int page, @Query("per_page") int pageSize);
 

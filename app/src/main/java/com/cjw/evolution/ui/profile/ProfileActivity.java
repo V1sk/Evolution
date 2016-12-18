@@ -2,7 +2,7 @@ package com.cjw.evolution.ui.profile;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -47,6 +47,9 @@ public class ProfileActivity extends BaseActivity implements ProfileContract.Vie
     private HeaderViewHolder headerViewHolder;
     private boolean following;
 
+    private int page = 1;
+    private int pageSize = 30;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,6 +59,7 @@ public class ProfileActivity extends BaseActivity implements ProfileContract.Vie
         new ProfilePresenter(this).subscribe();
         setupRecyclerView();
         initEventBus();
+        presenter.listShotsForUser(user.getId(), page, pageSize);
     }
 
     private void initEventBus() {
@@ -81,7 +85,7 @@ public class ProfileActivity extends BaseActivity implements ProfileContract.Vie
         profileAdapter.addHeaderView(view);
         headerViewHolder = new HeaderViewHolder(view);
         headerViewHolder.initData(user);
-        layoutManager = new LinearLayoutManager(this);
+        layoutManager = new GridLayoutManager(this, 4);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(profileAdapter);
     }
@@ -103,6 +107,12 @@ public class ProfileActivity extends BaseActivity implements ProfileContract.Vie
     public void onFollowingResult(boolean following) {
         this.following = following;
         headerViewHolder.following(following);
+    }
+
+    @Override
+    public void onListUsersShots(List<Shots> shotsList) {
+        profileAdapter.addData(shotsList);
+        profileAdapter.notifyDataSetChanged();
     }
 
     @Override

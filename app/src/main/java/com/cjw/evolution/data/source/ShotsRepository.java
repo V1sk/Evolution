@@ -32,4 +32,9 @@ public class ShotsRepository implements ShotsContract {
     public Observable<List<Shots>> getShots(String sort, int page, int pageSize) {
         return dribbbleApiService.getShots(sort, page, pageSize);
     }
+
+    @Override
+    public Observable<List<Shots>> listShotsForUser(long userId, int page, int pageSize) {
+        return dribbbleApiService.listShotsForUser(userId, page, pageSize);
+    }
 }

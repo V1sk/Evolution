@@ -15,4 +15,6 @@ public interface ShotsContract {
 
     Observable<List<Shots>> getShots(String sort, int page, int pageSize);
 
+    Observable<List<Shots>> listShotsForUser(long userId, int page, int pageSize);
+
 }
