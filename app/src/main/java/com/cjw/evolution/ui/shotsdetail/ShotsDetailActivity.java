@@ -1,14 +1,12 @@
 package com.cjw.evolution.ui.shotsdetail;
 
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.view.ViewCompat;
-import android.support.v4.view.ViewPropertyAnimatorCompat;
-import android.support.v7.view.ViewPropertyAnimatorCompatSet;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -18,6 +16,8 @@ import android.transition.Transition;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -44,8 +44,6 @@ import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ShotsDetailActivity extends BaseActivity implements ShotsDetailContract.View, BaseQuickAdapter.RequestLoadMoreListener {
-
-    final long ANIMATION_DURATION = 500;
 
     @BindView(R.id.shots_image)
     ImageView shotsImage;
@@ -78,25 +76,29 @@ public class ShotsDetailActivity extends BaseActivity implements ShotsDetailCont
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shots_detail);
-        ButterKnife.bind(this);
-        fab.hide();
         getWindow().getSharedElementReturnTransition().addListener(shotReturnHomeListener);
+        ButterKnife.bind(this);
         supportActionBar(toolbar);
         getExtras();
-
         shotsDetailQuickAdapter = new ShotsDetailQuickAdapter(commentList);
         openLoadMore();
-
         initHeaderView();
         initFooterView();
         initAppBar();
+        initRecyclerView();
+        start();
+    }
 
-        layoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(shotsDetailQuickAdapter);
+    private void start() {
         new ShotsDetailPresenter(ShotsDetailRepository.getInstance(), this).subscribe();
         presenter.getCommentList(shots.getId());
         presenter.checkIfLike(shots.getId());
+    }
+
+    private void initRecyclerView() {
+        layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(shotsDetailQuickAdapter);
     }
 
     private void initAppBar() {
@@ -158,12 +160,8 @@ public class ShotsDetailActivity extends BaseActivity implements ShotsDetailCont
     }
 
     private void animateRecyclers() {
-        recyclerView.setAlpha(0f);
-        ViewPropertyAnimatorCompat appNameAnimator = ViewCompat.animate(recyclerView)
-                .alpha(1)
-                .setDuration(ANIMATION_DURATION);
-        ViewPropertyAnimatorCompatSet animatorSet = new ViewPropertyAnimatorCompatSet();
-        animatorSet.play(appNameAnimator);
+        Animation animation = AnimationUtils.loadAnimation(this, R.anim.anim_slide_in);
+        recyclerView.startAnimation(animation);
     }
 
     private Transition.TransitionListener shotReturnHomeListener = new AnimUtils
@@ -172,13 +170,23 @@ public class ShotsDetailActivity extends BaseActivity implements ShotsDetailCont
         public void onTransitionStart(Transition transition) {
             super.onTransitionStart(transition);
             recyclerView.setVisibility(View.GONE);
+            fab.setVisibility(View.GONE);
         }
 
         @Override
         public void onTransitionEnd(Transition transition) {
             recyclerView.setVisibility(View.VISIBLE);
+            fab.setVisibility(View.VISIBLE);
             animateRecyclers();
-            fab.show();
+            ObjectAnimator fabAnim = ObjectAnimator.ofFloat(fab, "alpha", 0.0f, 1.0f);
+            ObjectAnimator fabScaleXAnim = ObjectAnimator.ofFloat(fab, "scaleX", 0.0f, 1.0f);
+            ObjectAnimator fabScaleYAnim = ObjectAnimator.ofFloat(fab, "scaleY", 0.0f, 1.0f);
+            fabAnim.setDuration(300);
+            fabScaleXAnim.setDuration(300);
+            fabScaleYAnim.setDuration(300);
+            fabAnim.start();
+            fabScaleXAnim.start();
+            fabScaleYAnim.start();
         }
     };
 
