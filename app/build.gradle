@@ -1,5 +1,5 @@
 apply plugin: 'com.android.application'
-apply plugin: 'android-apt'
+apply plugin: 'com.jakewharton.butterknife'
 apply plugin: 'org.greenrobot.greendao'
 
 android {
@@ -48,7 +48,7 @@ dependencies {
     })
     def libs = rootProject.ext.libs
     testCompile libs.junit
-    apt libs.butterknife_apt
+    annotationProcessor libs.butterknife_apt
     compile libs.support_v4
     compile libs.appcompat_v7
     compile libs.material_design
