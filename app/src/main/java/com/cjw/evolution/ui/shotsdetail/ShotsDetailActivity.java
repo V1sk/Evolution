@@ -297,7 +297,7 @@ public class ShotsDetailActivity extends BaseActivity implements ShotsDetailCont
                     .load(shots.getUser().getAvatar_url())
                     .placeholder(R.drawable.head_default)
                     .override(100, 100)
-                    .crossFade()
+                    .dontAnimate()
                     .into(avatar);
             txtLikeCount.setText(String.format(context.getString(R.string.like_count), String.valueOf(shots.getLikes_count())));
             txtViewCount.setText(String.format(context.getString(R.string.view_count), String.valueOf(shots.getViews_count())));
