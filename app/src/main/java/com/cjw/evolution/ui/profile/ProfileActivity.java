@@ -1,5 +1,6 @@
 package com.cjw.evolution.ui.profile;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -12,14 +13,18 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.cjw.evolution.R;
 import com.cjw.evolution.RxBus;
 import com.cjw.evolution.account.UserSession;
+import com.cjw.evolution.data.ExtrasKey;
 import com.cjw.evolution.data.model.Following;
 import com.cjw.evolution.data.model.Shots;
 import com.cjw.evolution.data.model.User;
 import com.cjw.evolution.event.FollowingEvent;
 import com.cjw.evolution.ui.base.BaseActivity;
+import com.cjw.evolution.ui.shotsdetail.ShotsDetailActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -88,6 +93,19 @@ public class ProfileActivity extends BaseActivity implements ProfileContract.Vie
         layoutManager = new GridLayoutManager(this, 4);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(profileAdapter);
+        recyclerView.addOnItemTouchListener(new OnItemClickListener() {
+            @Override
+            public void SimpleOnItemClick(BaseQuickAdapter baseQuickAdapter, View view, int i) {
+                View itemImage = view.findViewById(R.id.profile_item_image);
+                itemImage.setTransitionName(getResources().getString(R.string.transition_shot));
+                Intent intent = new Intent(ProfileActivity.this, ShotsDetailActivity.class);
+                Shots shots = shotsList.get(i);
+                shots.setUser(user);
+                intent.putExtra(ExtrasKey.EXTRAS_SHOTS_DETAIL, shots);
+                ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(ProfileActivity.this, itemImage, itemImage.getTransitionName());
+                startActivity(intent, options.toBundle());
+            }
+        });
     }
 
     private void getExtras() {
