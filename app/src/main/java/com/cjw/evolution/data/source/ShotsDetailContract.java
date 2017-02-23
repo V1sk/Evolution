@@ -3,6 +3,7 @@ package com.cjw.evolution.data.source;
 
 import com.cjw.evolution.data.model.Comment;
 import com.cjw.evolution.data.model.LikeResponse;
+import com.cjw.evolution.data.model.LikeUser;
 
 import java.util.List;
 
@@ -21,5 +22,7 @@ public interface ShotsDetailContract {
     Observable<LikeResponse> like(long shotsId);
 
     Observable unLike(long shotsId);
+
+    Observable<List<LikeUser>> listLikes(long shotsId, int page, int pageSize);
 
 }

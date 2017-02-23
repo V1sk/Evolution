@@ -3,6 +3,7 @@ package com.cjw.evolution.data.source.remote.api;
 import com.cjw.evolution.data.model.Comment;
 import com.cjw.evolution.data.model.Following;
 import com.cjw.evolution.data.model.LikeResponse;
+import com.cjw.evolution.data.model.LikeUser;
 import com.cjw.evolution.data.model.Shots;
 import com.cjw.evolution.data.model.User;
 
@@ -59,4 +60,9 @@ public interface DribbbleApiService {
 
     @DELETE("users/{user}/follow")
     Observable<Void> unfollow(@Path("user") long userId);
+
+    @GET("shots/{id}/likes")
+    Observable<List<LikeUser>> listLikes(@Path("id") long shotsId,
+                                   @Query("page") int page,
+                                   @Query("per_page") int pageSize);
 }

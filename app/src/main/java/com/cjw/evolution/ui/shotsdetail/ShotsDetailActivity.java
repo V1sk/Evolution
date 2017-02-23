@@ -33,6 +33,7 @@ import com.cjw.evolution.data.model.Comment;
 import com.cjw.evolution.data.model.Shots;
 import com.cjw.evolution.data.source.ShotsDetailRepository;
 import com.cjw.evolution.ui.base.BaseActivity;
+import com.cjw.evolution.ui.shotsdetail.likes.LikeBottomSheetDialogFragment;
 import com.cjw.evolution.utils.AnimUtils;
 
 import java.util.ArrayList;
@@ -251,7 +252,7 @@ public class ShotsDetailActivity extends BaseActivity implements ShotsDetailCont
         presenter.getCommentList(shots.getId());
     }
 
-    static class HeaderViewHolder {
+    class HeaderViewHolder {
         @BindView(R.id.item_title)
         TextView itemTitle;
         @BindView(R.id.item_summary)
@@ -288,7 +289,7 @@ public class ShotsDetailActivity extends BaseActivity implements ShotsDetailCont
             context = view.getContext();
         }
 
-        public void setData(Shots shots) {
+        public void setData(final Shots shots) {
             itemTitle.setText(shots.getTitle());
             String description = !TextUtils.isEmpty(shots.getDescription()) ? shots.getDescription() : "";
             itemSummary.setText(Html.fromHtml(description).toString().trim());
@@ -301,6 +302,14 @@ public class ShotsDetailActivity extends BaseActivity implements ShotsDetailCont
                     .into(avatar);
             txtLikeCount.setText(String.format(context.getString(R.string.like_count), String.valueOf(shots.getLikes_count())));
             txtViewCount.setText(String.format(context.getString(R.string.view_count), String.valueOf(shots.getViews_count())));
+            layoutLike.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    LikeBottomSheetDialogFragment likeBottomSheetDialogFragment = LikeBottomSheetDialogFragment.newInstance(shots.getId(),shots.getLikes_count());
+                    likeBottomSheetDialogFragment.show(getSupportFragmentManager(),likeBottomSheetDialogFragment.getTag());
+
+                }
+            });
         }
     }
 }

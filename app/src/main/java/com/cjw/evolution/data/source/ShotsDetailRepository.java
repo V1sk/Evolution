@@ -4,6 +4,7 @@ package com.cjw.evolution.data.source;
 import com.cjw.evolution.data.Injection;
 import com.cjw.evolution.data.model.Comment;
 import com.cjw.evolution.data.model.LikeResponse;
+import com.cjw.evolution.data.model.LikeUser;
 import com.cjw.evolution.data.source.remote.api.DribbbleApiService;
 
 import java.util.List;
@@ -48,5 +49,10 @@ public class ShotsDetailRepository implements ShotsDetailContract {
     @Override
     public Observable<Object> unLike(long shotsId) {
         return dribbbleApiService.unLike(shotsId);
+    }
+
+    @Override
+    public Observable<List<LikeUser>> listLikes(long shotsId, int page, int pageSize) {
+        return dribbbleApiService.listLikes(shotsId, page, pageSize);
     }
 }
