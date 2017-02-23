@@ -86,7 +86,7 @@ public class FollowingFragment extends BaseFragment implements FollowingContract
             @Override
             public void SimpleOnItemClick(BaseQuickAdapter baseQuickAdapter, View view, int i) {
                 Intent intent = new Intent(getActivity(), ProfileActivity.class);
-                intent.putExtra(ProfileActivity.EXTRA_FOLLOWING, (Following) baseQuickAdapter.getItem(i));
+                intent.putExtra(ProfileActivity.EXTRA_FOLLOWING, ((Following) baseQuickAdapter.getItem(i)).getFollowee());
                 startActivity(intent);
             }
         });

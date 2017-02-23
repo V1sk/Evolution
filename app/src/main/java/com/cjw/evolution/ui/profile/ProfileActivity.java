@@ -19,7 +19,6 @@ import com.cjw.evolution.R;
 import com.cjw.evolution.RxBus;
 import com.cjw.evolution.account.UserSession;
 import com.cjw.evolution.data.ExtrasKey;
-import com.cjw.evolution.data.model.Following;
 import com.cjw.evolution.data.model.Shots;
 import com.cjw.evolution.data.model.User;
 import com.cjw.evolution.event.FollowingEvent;
@@ -67,6 +66,13 @@ public class ProfileActivity extends BaseActivity implements ProfileContract.Vie
         presenter.listShotsForUser(user.getId(), page, pageSize);
     }
 
+//    @Override
+//    protected void onNewIntent(Intent intent) {
+//        super.onNewIntent(intent);
+//        getExtras();
+//        presenter.listShotsForUser(user.getId(), page, pageSize);
+//    }
+
     private void initEventBus() {
         Subscription subscription = RxBus.getInstance().toObservable().subscribe(new Action1<Object>() {
             @Override
@@ -112,8 +118,7 @@ public class ProfileActivity extends BaseActivity implements ProfileContract.Vie
         Intent intent = getIntent();
         if (intent.hasExtra(EXTRA_FOLLOWING)) {
             //from following
-            Following following = intent.getParcelableExtra(EXTRA_FOLLOWING);
-            user = following.getFollowee();
+            user = intent.getParcelableExtra(EXTRA_FOLLOWING);
         } else {
             //load user's profile
             user = UserSession.getInstance().getUser();

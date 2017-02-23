@@ -33,6 +33,7 @@ import com.cjw.evolution.data.model.Comment;
 import com.cjw.evolution.data.model.Shots;
 import com.cjw.evolution.data.source.ShotsDetailRepository;
 import com.cjw.evolution.ui.base.BaseActivity;
+import com.cjw.evolution.ui.profile.ProfileActivity;
 import com.cjw.evolution.ui.shotsdetail.likes.LikeBottomSheetDialogFragment;
 import com.cjw.evolution.utils.AnimUtils;
 
@@ -308,6 +309,14 @@ public class ShotsDetailActivity extends BaseActivity implements ShotsDetailCont
                     LikeBottomSheetDialogFragment likeBottomSheetDialogFragment = LikeBottomSheetDialogFragment.newInstance(shots.getId(),shots.getLikes_count());
                     likeBottomSheetDialogFragment.show(getSupportFragmentManager(),likeBottomSheetDialogFragment.getTag());
 
+                }
+            });
+            userLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(ShotsDetailActivity.this, ProfileActivity.class);
+                    intent.putExtra(ProfileActivity.EXTRA_FOLLOWING, shots.getUser());
+                    startActivity(intent);
                 }
             });
         }

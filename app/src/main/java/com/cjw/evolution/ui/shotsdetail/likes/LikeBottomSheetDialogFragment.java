@@ -2,6 +2,7 @@ package com.cjw.evolution.ui.shotsdetail.likes;
 
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetBehavior;
@@ -16,10 +17,12 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.cjw.evolution.R;
 import com.cjw.evolution.data.ExtrasKey;
 import com.cjw.evolution.data.model.LikeUser;
 import com.cjw.evolution.data.source.ShotsDetailRepository;
+import com.cjw.evolution.ui.profile.ProfileActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -93,9 +96,19 @@ public class LikeBottomSheetDialogFragment extends BottomSheetDialogFragment imp
         likeAdapter = new LikeAdapter(likeUsers);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setAdapter(likeAdapter);
+        recyclerView.addOnItemTouchListener(new OnItemClickListener() {
+            @Override
+            public void SimpleOnItemClick(BaseQuickAdapter baseQuickAdapter, View view, int i) {
+                LikeUser likeUser = (LikeUser) baseQuickAdapter.getItem(i);
+                Intent intent = new Intent(getActivity(), ProfileActivity.class);
+                intent.putExtra(ProfileActivity.EXTRA_FOLLOWING, likeUser.getUser());
+                startActivity(intent);
+            }
+        });
         likeAdapter.openLoadMore(LikePresenter.PAGE_SIZE);
         likeAdapter.openLoadAnimation();
         likeAdapter.setOnLoadMoreListener(this);
+
         new LikePresenter(ShotsDetailRepository.getInstance(),this).subscribe();
         presenter.listLikes(getArguments().getLong(ExtrasKey.EXTRAS_SHOTS_ID));
     }
