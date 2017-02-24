@@ -1,6 +1,6 @@
 package com.cjw.evolution.ui.following;
 
-import com.cjw.evolution.data.model.Following;
+import com.cjw.evolution.data.model.Follows;
 import com.cjw.evolution.data.source.FollowingRepository;
 
 import java.util.List;
@@ -68,7 +68,7 @@ public class FollowingPresenter implements FollowingContract.Presenter {
         Subscription subscription = followingRepository.getFollowing(page, PAGE_SIZE)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribe(new Subscriber<List<Following>>() {
+                .subscribe(new Subscriber<List<Follows>>() {
                     @Override
                     public void onCompleted() {
                         view.hideLoadingIndicator();
@@ -89,7 +89,7 @@ public class FollowingPresenter implements FollowingContract.Presenter {
                     }
 
                     @Override
-                    public void onNext(List<Following> users) {
+                    public void onNext(List<Follows> users) {
                         view.showFollowing(users, page == 1);
                         if (users.size() == PAGE_SIZE) {
                             page++;

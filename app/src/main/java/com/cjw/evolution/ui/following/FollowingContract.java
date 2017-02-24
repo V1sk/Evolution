@@ -1,6 +1,6 @@
 package com.cjw.evolution.ui.following;
 
-import com.cjw.evolution.data.model.Following;
+import com.cjw.evolution.data.model.Follows;
 import com.cjw.evolution.ui.base.BasePresenter;
 import com.cjw.evolution.ui.base.BaseView;
 
@@ -14,7 +14,7 @@ public interface FollowingContract {
 
     interface View extends BaseView<Presenter> {
 
-        void showFollowing(List<Following> followingList, boolean refresh);
+        void showFollowing(List<Follows> followsList, boolean refresh);
 
         void onGetFollowingError(Throwable throwable);
 

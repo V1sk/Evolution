@@ -1,7 +1,7 @@
 package com.cjw.evolution.data.source.remote.api;
 
 import com.cjw.evolution.data.model.Comment;
-import com.cjw.evolution.data.model.Following;
+import com.cjw.evolution.data.model.Follows;
 import com.cjw.evolution.data.model.LikeResponse;
 import com.cjw.evolution.data.model.LikeUser;
 import com.cjw.evolution.data.model.Shots;
@@ -49,8 +49,18 @@ public interface DribbbleApiService {
     Observable<Object> unLike(@Path("id") long id);
 
     @GET("user/following")
-    Observable<List<Following>> getFollowing(@Query("page") int page,
-                                             @Query("per_page") int pageSize);
+    Observable<List<Follows>> getFollowing(@Query("page") int page,
+                                           @Query("per_page") int pageSize);
+
+    @GET("users/{user}/following")
+    Observable<List<Follows>> getUserFollowing(@Path("user") long userId,
+                                               @Query("page") int page,
+                                               @Query("per_page") int pageSize);
+
+    @GET("users/{user}/followers")
+    Observable<List<Follows>> getUserFollowers(@Path("user") long userId,
+                                               @Query("page") int page,
+                                               @Query("per_page") int pageSize);
 
     @GET("user/following/{user}")
     Observable<Void> following(@Path("user") long userId);
@@ -63,6 +73,6 @@ public interface DribbbleApiService {
 
     @GET("shots/{id}/likes")
     Observable<List<LikeUser>> listLikes(@Path("id") long shotsId,
-                                   @Query("page") int page,
-                                   @Query("per_page") int pageSize);
+                                         @Query("page") int page,
+                                         @Query("per_page") int pageSize);
 }

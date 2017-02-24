@@ -1,7 +1,7 @@
 package com.cjw.evolution.data.source;
 
 import com.cjw.evolution.data.Injection;
-import com.cjw.evolution.data.model.Following;
+import com.cjw.evolution.data.model.Follows;
 import com.cjw.evolution.data.source.remote.api.DribbbleApiService;
 
 import java.util.List;
@@ -29,8 +29,18 @@ public class FollowingRepository implements FollowingContract {
     }
 
     @Override
-    public Observable<List<Following>> getFollowing(int page, int pageSize) {
+    public Observable<List<Follows>> getFollowing(int page, int pageSize) {
         return dribbbleApiService.getFollowing(page, pageSize);
+    }
+
+    @Override
+    public Observable<List<Follows>> getUserFollowing(long userId, int page, int pageSize) {
+        return dribbbleApiService.getUserFollowing(userId, page, pageSize);
+    }
+
+    @Override
+    public Observable<List<Follows>> getUserFollowers(long userId, int page, int pageSize) {
+        return dribbbleApiService.getUserFollowers(userId, page, pageSize);
     }
 
     @Override

@@ -4,11 +4,11 @@
     <!-- Main -->
     <string name="evo.main.tab.shots">Shots</string>
     <string name="evo.main.tab.about">About</string>
-    <string name="evo.main.tab.following">Following</string>
+    <string name="evo.main.tab.follows">Following</string>
 
     <string-array name="evo_main_tab_titles">
         <item>@string/evo.main.tab.shots</item>
-        <item>@string/evo.main.tab.following</item>
+        <item>@string/evo.main.tab.follows</item>
         <item>@string/evo.main.tab.about</item>
     </string-array>
 

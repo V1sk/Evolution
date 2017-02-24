@@ -17,7 +17,7 @@ import android.widget.TextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.cjw.evolution.R;
-import com.cjw.evolution.data.model.Following;
+import com.cjw.evolution.data.model.Follows;
 import com.cjw.evolution.data.source.FollowingRepository;
 import com.cjw.evolution.ui.base.BaseFragment;
 import com.cjw.evolution.ui.common.LineDividerDecoration;
@@ -41,7 +41,7 @@ public class FollowingFragment extends BaseFragment implements FollowingContract
 
     private FollowingContract.Presenter presenter;
     private FollowingAdapter followingAdapter;
-    private List<Following> userList = new ArrayList<>();
+    private List<Follows> userList = new ArrayList<>();
     private View notLoadingView;
 
     public FollowingFragment() {
@@ -84,7 +84,7 @@ public class FollowingFragment extends BaseFragment implements FollowingContract
             @Override
             public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
                 Intent intent = new Intent(getActivity(), ProfileActivity.class);
-                intent.putExtra(ProfileActivity.EXTRA_FOLLOWING, ((Following) baseQuickAdapter.getItem(position)).getFollowee());
+                intent.putExtra(ProfileActivity.EXTRA_FOLLOWING, ((Follows) baseQuickAdapter.getItem(position)).getFollowee());
                 startActivity(intent);
             }
         });
@@ -100,10 +100,10 @@ public class FollowingFragment extends BaseFragment implements FollowingContract
     }
 
     @Override
-    public void showFollowing(List<Following> followingList, boolean refresh) {
+    public void showFollowing(List<Follows> followsList, boolean refresh) {
         if (refresh)
             userList.clear();
-        userList.addAll(followingList);
+        userList.addAll(followsList);
         followingAdapter.notifyDataSetChanged();
     }
 

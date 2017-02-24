@@ -7,12 +7,14 @@ import android.os.Parcelable;
  * Created by CJW on 2016/10/23.
  */
 
-public class Following implements Parcelable {
+public class Follows implements Parcelable {
 
     private long id;
     private String created_at;
 
     private User followee;
+
+    private User follower;
 
     public long getId() {
         return id;
@@ -38,6 +40,14 @@ public class Following implements Parcelable {
         this.followee = followee;
     }
 
+    public User getFollower() {
+        return follower;
+    }
+
+    public void setFollower(User follower) {
+        this.follower = follower;
+    }
+
 
     @Override
     public int describeContents() {
@@ -49,26 +59,28 @@ public class Following implements Parcelable {
         dest.writeLong(this.id);
         dest.writeString(this.created_at);
         dest.writeParcelable(this.followee, flags);
+        dest.writeParcelable(this.follower, flags);
     }
 
-    public Following() {
+    public Follows() {
     }
 
-    protected Following(Parcel in) {
+    protected Follows(Parcel in) {
         this.id = in.readLong();
         this.created_at = in.readString();
         this.followee = in.readParcelable(User.class.getClassLoader());
+        this.follower = in.readParcelable(User.class.getClassLoader());
     }
 
-    public static final Parcelable.Creator<Following> CREATOR = new Parcelable.Creator<Following>() {
+    public static final Parcelable.Creator<Follows> CREATOR = new Parcelable.Creator<Follows>() {
         @Override
-        public Following createFromParcel(Parcel source) {
-            return new Following(source);
+        public Follows createFromParcel(Parcel source) {
+            return new Follows(source);
         }
 
         @Override
-        public Following[] newArray(int size) {
-            return new Following[size];
+        public Follows[] newArray(int size) {
+            return new Follows[size];
         }
     };
 }

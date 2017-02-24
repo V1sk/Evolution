@@ -23,6 +23,7 @@ import com.cjw.evolution.data.model.Shots;
 import com.cjw.evolution.data.model.User;
 import com.cjw.evolution.event.FollowingEvent;
 import com.cjw.evolution.ui.base.BaseActivity;
+import com.cjw.evolution.ui.profile.follows.FollowsBottomSheet;
 import com.cjw.evolution.ui.shotsdetail.ShotsDetailActivity;
 
 import java.util.ArrayList;
@@ -137,7 +138,7 @@ public class ProfileActivity extends BaseActivity implements ProfileContract.Vie
         this.presenter = presenter;
     }
 
-    static class HeaderViewHolder {
+    class HeaderViewHolder {
         @BindView(R.id.user_avatar)
         CircleImageView userAvatar;
         @BindView(R.id.btn_following)
@@ -188,15 +189,18 @@ public class ProfileActivity extends BaseActivity implements ProfileContract.Vie
 
         @OnClick({R.id.btn_following, R.id.layout_following, R.id.layout_followers, R.id.layout_shots})
         public void onClick(View view) {
+            FollowsBottomSheet followsBottomSheet;
             switch (view.getId()) {
                 case R.id.btn_following:
                     RxBus.getInstance().post(new FollowingEvent());
                     break;
                 case R.id.layout_following:
-                    Log.d(TAG, "onClick: layout_following");
+                    followsBottomSheet = FollowsBottomSheet.newInstance(user,FollowsBottomSheet.TYPE_FOLLOWING);
+                    followsBottomSheet.show(getSupportFragmentManager(),followsBottomSheet.getTag());
                     break;
                 case R.id.layout_followers:
-                    Log.d(TAG, "onClick: layout_followers");
+                    followsBottomSheet = FollowsBottomSheet.newInstance(user,FollowsBottomSheet.TYPE_FOLLOWERS);
+                    followsBottomSheet.show(getSupportFragmentManager(),followsBottomSheet.getTag());
                     break;
                 case R.id.layout_shots:
                     Log.d(TAG, "onClick: layout_shots");

@@ -1,6 +1,6 @@
 package com.cjw.evolution.data.source;
 
-import com.cjw.evolution.data.model.Following;
+import com.cjw.evolution.data.model.Follows;
 
 import java.util.List;
 
@@ -12,7 +12,11 @@ import rx.Observable;
 
 public interface FollowingContract {
 
-    Observable<List<Following>> getFollowing(int page, int pageSize);
+    Observable<List<Follows>> getFollowing(int page, int pageSize);
+
+    Observable<List<Follows>> getUserFollowing(long userId, int page, int pageSize);
+
+    Observable<List<Follows>> getUserFollowers(long userId, int page, int pageSize);
 
     Observable<Void> following(long userId);
 

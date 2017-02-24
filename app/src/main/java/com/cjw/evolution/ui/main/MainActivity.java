@@ -1,5 +1,6 @@
 package com.cjw.evolution.ui.main;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
@@ -20,6 +21,7 @@ import com.cjw.evolution.data.model.User;
 import com.cjw.evolution.ui.base.BaseActivity;
 import com.cjw.evolution.ui.base.BaseFragment;
 import com.cjw.evolution.ui.about.AboutFragment;
+import com.cjw.evolution.ui.profile.ProfileActivity;
 import com.cjw.evolution.ui.shots.ShotsFragment;
 import com.cjw.evolution.ui.following.FollowingFragment;
 
@@ -95,8 +97,11 @@ public class MainActivity extends BaseActivity {
             @Override
             public boolean onNavigationItemSelected(MenuItem item) {
                 drawerLayout.closeDrawers();
+                Intent intent;
                 switch (item.getItemId()) {
                     case R.id.profile:
+                        intent = new Intent(MainActivity.this, ProfileActivity.class);
+                        startActivity(intent);
                         break;
                     case R.id.buckets:
                         break;

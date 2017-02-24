@@ -34,7 +34,7 @@ import butterknife.ButterKnife;
 public class LikeBottomSheetDialogFragment extends BottomSheetDialogFragment implements LikesContract.View,BaseQuickAdapter.RequestLoadMoreListener {
 
 
-    @BindView(R.id.like_count)
+    @BindView(R.id.title)
     TextView likeCount;
     @BindView(R.id.loading_progress)
     ProgressBar loadingProgress;
@@ -81,7 +81,7 @@ public class LikeBottomSheetDialogFragment extends BottomSheetDialogFragment imp
     @Override
     public void setupDialog(Dialog dialog, int style) {
         super.setupDialog(dialog, style);
-        View contentView = View.inflate(getContext(), R.layout.fragment_like_bottom_sheet_dialog, null);
+        View contentView = View.inflate(getContext(), R.layout.layout_user_bottom_sheet_dialog, null);
         dialog.setContentView(contentView);
         ButterKnife.bind(this, contentView);
         CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) ((View) contentView.getParent()).getLayoutParams();

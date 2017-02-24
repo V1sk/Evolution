@@ -78,7 +78,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
-                android:text="@string/evo.main.tab.following" />
+                android:text="@string/evo.main.tab.follows" />
 
         </LinearLayout>
 
