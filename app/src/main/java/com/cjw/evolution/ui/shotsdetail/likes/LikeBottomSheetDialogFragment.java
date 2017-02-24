@@ -98,14 +98,13 @@ public class LikeBottomSheetDialogFragment extends BottomSheetDialogFragment imp
         recyclerView.setAdapter(likeAdapter);
         recyclerView.addOnItemTouchListener(new OnItemClickListener() {
             @Override
-            public void SimpleOnItemClick(BaseQuickAdapter baseQuickAdapter, View view, int i) {
-                LikeUser likeUser = (LikeUser) baseQuickAdapter.getItem(i);
+            public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
+                LikeUser likeUser = (LikeUser) baseQuickAdapter.getItem(position);
                 Intent intent = new Intent(getActivity(), ProfileActivity.class);
                 intent.putExtra(ProfileActivity.EXTRA_FOLLOWING, likeUser.getUser());
                 startActivity(intent);
             }
         });
-        likeAdapter.openLoadMore(LikePresenter.PAGE_SIZE);
         likeAdapter.openLoadAnimation();
         likeAdapter.setOnLoadMoreListener(this);
 
@@ -116,18 +115,32 @@ public class LikeBottomSheetDialogFragment extends BottomSheetDialogFragment imp
 
     @Override
     public void onListLikes(List<LikeUser> likeUserList) {
-        likeAdapter.addData(likeUserList);
+        likeAdapter.loadMoreComplete();
+        likeUsers.addAll(likeUserList);
+        likeAdapter.notifyDataSetChanged();
         if(likeAdapter.getItemCount()>0){
             loadingProgress.setVisibility(View.GONE);
         }
     }
 
     @Override
+    public void loadFailed() {
+        dismiss();
+    }
+
+    @Override
+    public void loadMoreFailed() {
+        likeAdapter.loadMoreFail();
+    }
+
+    @Override
     public void noMoreData() {
-        likeAdapter.loadComplete();
+        likeAdapter.loadMoreComplete();
+        likeAdapter.setEnableLoadMore(false);
         if (notLoadingView == null)
             notLoadingView = LayoutInflater.from(getActivity()).inflate(R.layout.not_loading, (ViewGroup) recyclerView.getParent(), false);
         likeAdapter.addFooterView(notLoadingView);
+
     }
 
     @Override

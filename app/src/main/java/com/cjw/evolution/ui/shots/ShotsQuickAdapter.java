@@ -16,7 +16,7 @@ import java.util.List;
  * Created by CJW on 2016/10/16.
  */
 
-public class ShotsQuickAdapter extends BaseQuickAdapter<Shots> {
+public class ShotsQuickAdapter extends BaseQuickAdapter<Shots,BaseViewHolder> {
 
     public ShotsQuickAdapter(List<Shots> data) {
         super(R.layout.item_shots_layout, data);

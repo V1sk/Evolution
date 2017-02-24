@@ -16,6 +16,10 @@ public interface LikesContract {
 
         void onListLikes(List<LikeUser> likeUserList);
 
+        void loadFailed();
+
+        void loadMoreFailed();
+
         void noMoreData();
 
     }

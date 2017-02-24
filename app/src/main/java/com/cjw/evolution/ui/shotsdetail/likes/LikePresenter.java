@@ -44,7 +44,11 @@ public class LikePresenter implements LikesContract.Presenter {
 
                     @Override
                     public void onError(Throwable e) {
-
+                        if(page==1){
+                            view.loadFailed();
+                        }else {
+                            view.loadMoreFailed();
+                        }
                     }
 
                     @Override

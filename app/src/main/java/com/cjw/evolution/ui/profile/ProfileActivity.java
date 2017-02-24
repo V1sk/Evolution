@@ -66,12 +66,6 @@ public class ProfileActivity extends BaseActivity implements ProfileContract.Vie
         presenter.listShotsForUser(user.getId(), page, pageSize);
     }
 
-//    @Override
-//    protected void onNewIntent(Intent intent) {
-//        super.onNewIntent(intent);
-//        getExtras();
-//        presenter.listShotsForUser(user.getId(), page, pageSize);
-//    }
 
     private void initEventBus() {
         Subscription subscription = RxBus.getInstance().toObservable().subscribe(new Action1<Object>() {
@@ -101,11 +95,11 @@ public class ProfileActivity extends BaseActivity implements ProfileContract.Vie
         recyclerView.setAdapter(profileAdapter);
         recyclerView.addOnItemTouchListener(new OnItemClickListener() {
             @Override
-            public void SimpleOnItemClick(BaseQuickAdapter baseQuickAdapter, View view, int i) {
+            public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
                 View itemImage = view.findViewById(R.id.profile_item_image);
                 itemImage.setTransitionName(getResources().getString(R.string.transition_shot));
                 Intent intent = new Intent(ProfileActivity.this, ShotsDetailActivity.class);
-                Shots shots = shotsList.get(i);
+                Shots shots = shotsList.get(position);
                 shots.setUser(user);
                 intent.putExtra(ExtrasKey.EXTRAS_SHOTS_DETAIL, shots);
                 ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(ProfileActivity.this, itemImage, itemImage.getTransitionName());

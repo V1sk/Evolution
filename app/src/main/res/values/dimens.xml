@@ -18,4 +18,8 @@
     <dimen name="tab.indicator.height">2dp</dimen>
     <dimen name="padding.normal">8dp</dimen>
     <dimen name="text_medium">15sp</dimen>
+    <dimen name="dp_14">14sp</dimen>
+    <dimen name="dp_36">36dp</dimen>
+    <dimen name="avatarSize">40dp</dimen>
+    <dimen name="smallSpace">5dp</dimen>
 </resources>

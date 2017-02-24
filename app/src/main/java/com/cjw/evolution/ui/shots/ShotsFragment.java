@@ -85,17 +85,16 @@ public class ShotsFragment extends BaseFragment implements ShotsContract.View, S
         shotsListRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         quickAdapter = new ShotsQuickAdapter(mData);
         quickAdapter.openLoadAnimation();
-        quickAdapter.openLoadMore(ShotsPresenter.PAGE_SIZE);
         shotsListRecyclerView.setAdapter(quickAdapter);
         quickAdapter.setOnLoadMoreListener(this);
         shotsListRecyclerView.addItemDecoration(new ShotsDecoration());
         shotsListRecyclerView.addOnItemTouchListener(new OnItemClickListener() {
             @Override
-            public void SimpleOnItemClick(BaseQuickAdapter baseQuickAdapter, View view, int i) {
+            public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
                 View itemImage = view.findViewById(R.id.item_image);
                 itemImage.setTransitionName(getContext().getResources().getString(R.string.transition_shot));
                 Intent intent = new Intent(getContext(), ShotsDetailActivity.class);
-                intent.putExtra(ExtrasKey.EXTRAS_SHOTS_DETAIL, mData.get(i));
+                intent.putExtra(ExtrasKey.EXTRAS_SHOTS_DETAIL, mData.get(position));
                 ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation((Activity) getContext(), itemImage, itemImage.getTransitionName());
                 getContext().startActivity(intent, options.toBundle());
             }
@@ -125,7 +124,7 @@ public class ShotsFragment extends BaseFragment implements ShotsContract.View, S
     public void showShots(List<Shots> shotsList, boolean refresh) {
         if (refresh)
             mData.clear();
-        quickAdapter.addData(shotsList);
+        mData.addAll(shotsList);
         quickAdapter.notifyDataSetChanged();
     }
 
@@ -136,6 +135,7 @@ public class ShotsFragment extends BaseFragment implements ShotsContract.View, S
 
     @Override
     public void showOrHideEmptyView() {
+        quickAdapter.loadMoreComplete();
         boolean isEmpty = quickAdapter.getItemCount() == 0;
         emptyView.setVisibility(isEmpty ? View.VISIBLE : View.GONE);
         shotsListRecyclerView.setVisibility(isEmpty ? View.GONE : View.VISIBLE);
@@ -158,7 +158,7 @@ public class ShotsFragment extends BaseFragment implements ShotsContract.View, S
 
     @Override
     public void showLoadMoreFailed() {
-        quickAdapter.showLoadMoreFailedView();
+        quickAdapter.loadMoreFail();
     }
 
     @Override

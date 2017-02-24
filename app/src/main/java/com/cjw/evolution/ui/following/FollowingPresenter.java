@@ -95,6 +95,7 @@ public class FollowingPresenter implements FollowingContract.Presenter {
                             page++;
                         } else {
                             hasMoreData = false;
+                            view.noMoreFollowing();
                         }
                     }
                 });

@@ -15,7 +15,7 @@ import java.util.List;
  * Created by chenjianwei on 2016/12/18.
  */
 
-public class ProfileAdapter extends BaseQuickAdapter<Shots> {
+public class ProfileAdapter extends BaseQuickAdapter<Shots,BaseViewHolder> {
 
     public ProfileAdapter(int layoutResId, List<Shots> data) {
         super(layoutResId, data);

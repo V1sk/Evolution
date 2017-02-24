@@ -22,7 +22,6 @@ import com.cjw.evolution.data.source.FollowingRepository;
 import com.cjw.evolution.ui.base.BaseFragment;
 import com.cjw.evolution.ui.common.LineDividerDecoration;
 import com.cjw.evolution.ui.profile.ProfileActivity;
-import com.cjw.evolution.ui.shots.ShotsPresenter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -77,16 +76,15 @@ public class FollowingFragment extends BaseFragment implements FollowingContract
         followingListRecyclerView.addItemDecoration(new LineDividerDecoration(getActivity(), LineDividerDecoration.VERTICAL_LIST));
         followingAdapter = new FollowingAdapter(userList);
         followingAdapter.openLoadAnimation();
-        followingAdapter.openLoadMore(ShotsPresenter.PAGE_SIZE);
         followingListRecyclerView.setAdapter(followingAdapter);
         followingAdapter.setOnLoadMoreListener(this);
         swipeRefreshLayout.setOnRefreshListener(this);
         followingListRecyclerView.setVisibility(View.GONE);
         followingListRecyclerView.addOnItemTouchListener(new OnItemClickListener() {
             @Override
-            public void SimpleOnItemClick(BaseQuickAdapter baseQuickAdapter, View view, int i) {
+            public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
                 Intent intent = new Intent(getActivity(), ProfileActivity.class);
-                intent.putExtra(ProfileActivity.EXTRA_FOLLOWING, ((Following) baseQuickAdapter.getItem(i)).getFollowee());
+                intent.putExtra(ProfileActivity.EXTRA_FOLLOWING, ((Following) baseQuickAdapter.getItem(position)).getFollowee());
                 startActivity(intent);
             }
         });
@@ -105,7 +103,7 @@ public class FollowingFragment extends BaseFragment implements FollowingContract
     public void showFollowing(List<Following> followingList, boolean refresh) {
         if (refresh)
             userList.clear();
-        followingAdapter.addData(followingList);
+        userList.addAll(followingList);
         followingAdapter.notifyDataSetChanged();
     }
 
@@ -116,6 +114,7 @@ public class FollowingFragment extends BaseFragment implements FollowingContract
 
     @Override
     public void showOrHideEmptyView() {
+        followingAdapter.loadMoreComplete();
         boolean isEmpty = followingAdapter.getItemCount() == 0;
         emptyView.setVisibility(isEmpty ? View.VISIBLE : View.GONE);
         followingListRecyclerView.setVisibility(isEmpty ? View.GONE : View.VISIBLE);
@@ -138,13 +137,15 @@ public class FollowingFragment extends BaseFragment implements FollowingContract
 
     @Override
     public void showLoadMoreFailed() {
-        followingAdapter.showLoadMoreFailedView();
+//        followingAdapter.showLoadMoreFailedView();
+        followingAdapter.loadMoreFail();
 
     }
 
     @Override
     public void noMoreFollowing() {
-        followingAdapter.loadComplete();
+        followingAdapter.loadMoreComplete();
+        followingAdapter.setEnableLoadMore(false);
         if (notLoadingView == null)
             notLoadingView = LayoutInflater.from(getActivity()).inflate(R.layout.not_loading, (ViewGroup) followingListRecyclerView.getParent(), false);
         followingAdapter.addFooterView(notLoadingView);

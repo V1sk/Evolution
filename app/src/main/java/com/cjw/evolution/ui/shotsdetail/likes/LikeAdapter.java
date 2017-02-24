@@ -16,7 +16,7 @@ import java.util.List;
  * Created by chenjianwei on 2017/2/23.
  */
 
-public class LikeAdapter extends BaseQuickAdapter<LikeUser> {
+public class LikeAdapter extends BaseQuickAdapter<LikeUser,BaseViewHolder> {
 
     public LikeAdapter(List<LikeUser> data) {
         super(R.layout.layout_item_like_user, data);

@@ -19,7 +19,7 @@ import java.util.List;
  * Created by CJW on 2016/10/18.
  */
 
-public class ShotsDetailQuickAdapter extends BaseQuickAdapter<Comment> {
+public class ShotsDetailQuickAdapter extends BaseQuickAdapter<Comment,BaseViewHolder> {
 
     public ShotsDetailQuickAdapter(List<Comment> data) {
         super(R.layout.layout_item_comment, data);

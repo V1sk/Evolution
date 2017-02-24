@@ -14,7 +14,7 @@ import java.util.List;
  * Created by CJW on 2016/10/23.
  */
 
-public class FollowingAdapter extends BaseQuickAdapter<Following> {
+public class FollowingAdapter extends BaseQuickAdapter<Following,BaseViewHolder> {
 
     public FollowingAdapter(List<Following> data) {
         super(R.layout.item_following_layout, data);

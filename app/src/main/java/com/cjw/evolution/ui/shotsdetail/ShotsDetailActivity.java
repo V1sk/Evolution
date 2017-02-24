@@ -133,7 +133,6 @@ public class ShotsDetailActivity extends BaseActivity implements ShotsDetailCont
 
     private void openLoadMore() {
         shotsDetailQuickAdapter.openLoadAnimation();
-        shotsDetailQuickAdapter.openLoadMore(ShotsDetailPresenter.PAGE_SIZE);
         shotsDetailQuickAdapter.setOnLoadMoreListener(this);
     }
 
@@ -195,8 +194,8 @@ public class ShotsDetailActivity extends BaseActivity implements ShotsDetailCont
     @Override
     public void onGetCommentSuccess(List<Comment> commentList) {
         shotsDetailQuickAdapter.removeFooterView(footerView);
-        shotsDetailQuickAdapter.addData(commentList);
-        openLoadMore();
+        this.commentList.addAll(commentList);
+        shotsDetailQuickAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -227,14 +226,14 @@ public class ShotsDetailActivity extends BaseActivity implements ShotsDetailCont
 
     @Override
     public void showOrHideEmptyView() {
-
+        shotsDetailQuickAdapter.loadMoreComplete();
     }
 
     @Override
     public void noMoreComments() {
-        shotsDetailQuickAdapter.loadComplete();
+        shotsDetailQuickAdapter.setEnableLoadMore(false);
         if (notLoadingView == null)
-            notLoadingView = getLayoutInflater().inflate(R.layout.not_loading, (ViewGroup) recyclerView.getParent(), false);
+            notLoadingView = LayoutInflater.from(this).inflate(R.layout.not_loading, (ViewGroup) recyclerView.getParent(), false);
         shotsDetailQuickAdapter.addFooterView(notLoadingView);
     }
 
