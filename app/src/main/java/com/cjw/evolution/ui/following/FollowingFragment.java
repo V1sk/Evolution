@@ -148,6 +148,7 @@ public class FollowingFragment extends BaseFragment implements FollowingContract
         followingAdapter.setEnableLoadMore(false);
         if (notLoadingView == null)
             notLoadingView = LayoutInflater.from(getActivity()).inflate(R.layout.not_loading, (ViewGroup) followingListRecyclerView.getParent(), false);
+        followingAdapter.removeAllFooterView();
         followingAdapter.addFooterView(notLoadingView);
     }
 

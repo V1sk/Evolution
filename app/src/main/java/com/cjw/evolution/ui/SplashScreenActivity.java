@@ -13,7 +13,7 @@ import com.cjw.evolution.ui.signin.SignInActivity;
 
 public class SplashScreenActivity extends AppCompatActivity {
 
-    final long SIGNED_IN_DELAY = 2500;
+    final long SIGNED_IN_DELAY = 3500;
 
     private Handler mHandler;
 
