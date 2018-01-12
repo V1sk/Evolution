@@ -10,7 +10,7 @@
         <item name="android:windowBackground">@color/background</item>
         <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
         <item name="android:textColorPrimary">@color/textColorPrimary</item>
-        <item name="android:textColorSecondary">@color/textColorSecondary</item>
+        <item name="android:textColorSecondary">@color/textColorSecondary</item>x
 
         <item name="android:listDivider">@drawable/divider</item>
     </style>
