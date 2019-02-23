@@ -2,9 +2,9 @@ package com.cjw.evolution.ui.signin;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.webkit.WebView;
 import android.widget.Toast;
 
@@ -14,6 +14,8 @@ import com.cjw.evolution.ui.base.BaseWebViewActivity;
 import com.cjw.evolution.ui.main.MainActivity;
 
 public class SignInActivity extends BaseWebViewActivity implements SignInContract.View {
+
+    private static final String TAG = "SignInActivity";
 
     private SignInContract.Presenter mPresenter;
     private ProgressDialog progressDialog;
@@ -33,14 +35,15 @@ public class SignInActivity extends BaseWebViewActivity implements SignInContrac
 
     @Override
     protected void overrideUrlLoading(WebView view, String url) {
-        if (!url.startsWith(ServerConfig.LOGIN_CALLBACK)) {
-            view.loadUrl(url);
-        }
+//        if (!url.startsWith(ServerConfig.LOGIN_CALLBACK)) {
+//            view.loadUrl(url);
+//        }
     }
 
     @Override
-    protected void pageStarted(WebView view, String url, Bitmap favicon) {
-        if (url.startsWith(ServerConfig.LOGIN_CALLBACK)) {
+    protected void pageStarted(WebView view, String url) {
+        Log.i(TAG, "pageStarted: " + url);
+        if (url.startsWith(ServerConfig.LOGIN_RESULT_CALLBACK)) {
             view.stopLoading();
             //https://v1sk.github.io/?code=df8fe8fe052f987b70c10f65619d74f6695d48d0c4de411649a63e2d07a6be5b
             String code = url.substring(url.indexOf("=") + 1);

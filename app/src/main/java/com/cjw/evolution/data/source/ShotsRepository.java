@@ -30,7 +30,7 @@ public class ShotsRepository implements ShotsContract {
 
     @Override
     public Observable<List<Shots>> getShots(String sort, int page, int pageSize) {
-        return dribbbleApiService.getShots(sort, page, pageSize);
+        return dribbbleApiService.getShots(page, pageSize);
     }
 
     @Override

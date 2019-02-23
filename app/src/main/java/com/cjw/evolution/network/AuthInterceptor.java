@@ -31,9 +31,6 @@ public class AuthInterceptor implements Interceptor {
 
     private String accessToken;
 
-    public AuthInterceptor() {
-    }
-
     @Override
     public Response intercept(Chain chain) throws IOException {
         if (UserSession.getInstance().isSignedIn()) {

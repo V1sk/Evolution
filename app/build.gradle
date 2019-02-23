@@ -1,5 +1,5 @@
 apply plugin: 'com.android.application'
-apply plugin: 'com.jakewharton.butterknife'
+//apply plugin: 'com.jakewharton.butterknife'
 apply plugin: 'org.greenrobot.greendao'
 
 android {
@@ -7,7 +7,7 @@ android {
     def globalConfiguration = rootProject.extensions.getByName("ext")
 
     compileSdkVersion globalConfiguration.compileSdkVersion
-    buildToolsVersion globalConfiguration.buildToolsVersion
+//    buildToolsVersion globalConfiguration.buildToolsVersion
 
     defaultConfig {
         applicationId "com.cjw.evolution"
@@ -33,6 +33,11 @@ android {
     packagingOptions {
         exclude 'META-INF/services/javax.annotation.processing.Processor'
     }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 greendao {
@@ -42,29 +47,30 @@ greendao {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     def libs = rootProject.ext.libs
-    testCompile libs.junit
+    testImplementation libs.junit
     annotationProcessor libs.butterknife_apt
-    compile libs.support_v4
-    compile libs.appcompat_v7
-    compile libs.material_design
-    compile libs.recyclerview_v7
-    compile libs.cardview_v7
-    compile libs.customtabs
-    compile libs.rxjava
-    compile libs.rxandroid
-    compile libs.glide
-    compile libs.butterknife
-    compile libs.gson
-    compile libs.retrofit2
-    compile libs.retrofit2GsonConverter
-    compile libs.retrofit2RxJavaAdapter
-    compile libs.circle_imageview
-    compile libs.glide_transformations
-    compile libs.greenDao
-    compile libs.recyclerview_helper
+//    compile libs.support_v4
+    implementation libs.appcompat_v7
+    implementation libs.material_design
+    implementation libs.recyclerview_v7
+    implementation libs.cardview_v7
+    implementation libs.customtabs
+    implementation libs.rxjava
+    implementation libs.rxandroid
+    implementation libs.glide
+    implementation libs.butterknife
+    implementation libs.gson
+    implementation libs.retrofit2
+    implementation libs.retrofit2GsonConverter
+    implementation libs.retrofit2RxJavaAdapter
+    implementation libs.circle_imageview
+    implementation libs.glide_transformations
+    implementation libs.greenDao
+    implementation libs.recyclerview_helper
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.10.0'
 }

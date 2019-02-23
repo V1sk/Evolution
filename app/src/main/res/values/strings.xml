@@ -35,5 +35,7 @@
     <string name="followers">Followers</string>
     <string name="follow">Follow</string>
     <string name="unfollow">UnFollow</string>
+    <string name="confirm">Confirm</string>
+    <string name="cancel">Cancel</string>
 
 </resources>

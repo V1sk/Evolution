@@ -1,10 +1,17 @@
 package com.cjw.evolution.network;
 
-import com.cjw.evolution.account.UserSession;
+import android.util.Log;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.util.Collections;
+
+import okhttp3.CipherSuite;
+import okhttp3.ConnectionSpec;
 import okhttp3.OkHttpClient;
+import okhttp3.TlsVersion;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -17,6 +24,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * Desc: RetrofitClient
  */
 public class RetrofitClient {
+
+    private static final String TAG = "RetrofitClient";
 
     public static Retrofit defaultInstance() {
         return new Retrofit.Builder()
@@ -36,19 +45,57 @@ public class RetrofitClient {
                 .build();
     }
 
-    public static OkHttpClient defaultApiOkHttpClient() {
-        return new OkHttpClient.Builder()
-                .addNetworkInterceptor(new AuthInterceptor())
+    private static OkHttpClient defaultApiOkHttpClient() {
+
+
+        HttpLoggingInterceptor logging = new HttpLoggingInterceptor(
+                new HttpLoggingInterceptor.Logger() {
+                    @Override
+                    public void log(String message) {
+                        Log.i(TAG, message);
+                    }
+                });
+        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+
+        OkHttpClient.Builder builder = new OkHttpClient.Builder();
+        ConnectionSpec spec = new ConnectionSpec.Builder(ConnectionSpec.MODERN_TLS)
+                .tlsVersions(TlsVersion.TLS_1_2)
+                .cipherSuites(
+                        CipherSuite.TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256,
+                        CipherSuite.TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,
+                        CipherSuite.TLS_DHE_RSA_WITH_AES_128_GCM_SHA256)
                 .build();
+
+        builder.connectionSpecs(Collections.singletonList(spec))
+                .addInterceptor(logging)
+                .addNetworkInterceptor(new AuthInterceptor());
+        return builder.build();
     }
 
-    public static OkHttpClient authorizeOkHttpClient() {
-        return new OkHttpClient.Builder()
+    private static OkHttpClient authorizeOkHttpClient() {
+        HttpLoggingInterceptor logging = new HttpLoggingInterceptor(
+                new HttpLoggingInterceptor.Logger() {
+                    @Override
+                    public void log(String message) {
+                        Log.d(TAG, message);
+                    }
+                });
+        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+        OkHttpClient.Builder builder = new OkHttpClient.Builder();
+        ConnectionSpec spec = new ConnectionSpec.Builder(ConnectionSpec.MODERN_TLS)
+                .tlsVersions(TlsVersion.TLS_1_2)
+                .cipherSuites(
+                        CipherSuite.TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256,
+                        CipherSuite.TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,
+                        CipherSuite.TLS_DHE_RSA_WITH_AES_128_GCM_SHA256)
                 .build();
+        return builder.addInterceptor(logging).connectionSpecs(Collections.singletonList(spec)).build();
     }
 
-    public static Gson defaultGson() {
+    private static Gson defaultGson() {
         return new GsonBuilder()
                 .create();
     }
+
+
 }
